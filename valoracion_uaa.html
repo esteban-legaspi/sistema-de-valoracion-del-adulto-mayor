@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Valoración del Adulto Mayor — UAA Enfermería</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* =============================================
+       VARIABLES DE COLOR (Paleta UAA)
+    ============================================= */
+    :root {
+      --azul-uaa:     #003087;   /* azul institucional UAA */
+      --azul-medio:   #0055B3;   /* azul medio para botones */
+      --azul-claro:   #E8F0FB;   /* fondo secciones */
+      --dorado-uaa:   #C8962A;   /* acento dorado UAA */
+      --blanco:       #FFFFFF;
+      --gris-claro:   #F4F6F9;
+      --gris-texto:   #444444;
+      --rojo-error:   #C0392B;
+      --verde-ok:     #27AE60;
+      --sombra:       0 4px 18px rgba(0,48,135,0.10);
+    }
+
+    /* =============================================
+       RESET Y BASE
+    ============================================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--gris-claro);
+      color: var(--gris-texto);
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* =============================================
+       PANTALLAS (vistas)
+       Solo se muestra la que tenga clase "activa"
+    ============================================= */
+    .pantalla { display: none; }
+    .pantalla.activa { display: block; }
+
+    /* =============================================
+       HEADER INSTITUCIONAL
+    ============================================= */
+    .header {
+      background: var(--azul-uaa);
+      color: var(--blanco);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: var(--sombra);
+    }
+
+    /* Logo SVG UAA simple */
+    .logo-uaa {
+      width: 54px; height: 54px; flex-shrink: 0;
+    }
+
+    .header-textos h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .header-textos p {
+      font-size: 0.78rem;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    .header-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .badge-usuario {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+    }
+
+    .btn-cerrar {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      color: var(--blanco);
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.2s;
+    }
+    .btn-cerrar:hover { background: rgba(255,255,255,0.15); }
+
+    /* =============================================
+       ---- PANTALLA 1: LOGIN ----
+    ============================================= */
+    #login {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--azul-uaa) 0%, #001a55 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #login.activa { display: flex; }
+
+    .login-card {
+      background: var(--blanco);
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .login-logo {
+      width: 72px; height: 72px; margin: 0 auto 10px;
+    }
+
+    .login-card h2 {
+      color: var(--azul-uaa);
+      font-size: 1.3rem;
+      margin-bottom: 4px;
+    }
+
+    .login-card p {
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 28px;
+    }
+
+    .login-card input,
+    .login-card select {
+      width: 100%;
+      border: 1.5px solid #DDD;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      font-family: 'Open Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .login-card input:focus,
+    .login-card select:focus {
+      outline: none;
+      border-color: var(--azul-medio);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--azul-uaa);
+      color: var(--blanco);
+      border: none;
+      border-radius: 8px;
+      padding: 13px;
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 6px;
+    }
+    .btn-primary:hover { background: var(--azul-medio); transform: translateY(-1px); }
+
+    .confidencialidad-check {
+      text-align: left;
+      font-size: 0.8rem;
+      color: #666;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .confidencialidad-check input { width: auto; margin: 0; }
+
+    /* =============================================
+       ---- PANTALLA 2: DASHBOARD ----
+    ============================================= */
+    #dashboard { background: var(--gris-claro); min-height: 100vh; }
+    #dashboard.activa { display: block; }
+
+    .dashboard-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+
+    .bienvenida {
+      background: linear-gradient(90deg, var(--azul-uaa), var(--azul-medio));
+      color: var(--blanco);
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .bienvenida h2 { font-size: 1.4rem; margin-bottom: 6px; }
+    .bienvenida p  { font-size: 0.9rem; opacity: 0.88; }
+
+    .btn-nueva-val {
+      background: var(--dorado-uaa);
+      color: var(--blanco);
+      border: none;
+      border-radius: 10px;
+      padding: 13px 24px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .btn-nueva-val:hover { opacity: 0.88; }
+
+    /* Tarjetas estadísticas */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--blanco);
+      border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: var(--sombra);
+      border-left: 5px solid var(--azul-uaa);
+    }
+
+    .stat-card.dorado { border-left-color: var(--dorado-uaa); }
+    .stat-card.verde  { border-left-color: var(--verde-ok); }
+
+    .stat-card .numero {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--azul-uaa);
+    }
+    .stat-card.dorado .numero { color: var(--dorado-uaa); }
+    .stat-card.verde  .numero { color: var(--verde-ok); }
+
+    .stat-card .etiqueta {
+      font-size: 0.82rem;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    /* Tabla de valoraciones */
+    .seccion-tabla {
+      background: var(--blanco);
+      border-radius: 14px;
+      box-shadow: var(--sombra);
+      overflow: hidden;
+    }
+
+    .seccion-tabla h3 {
+      padding: 20px 24px 16px;
+      font-size: 1rem;
+      color: var(--azul-uaa);
+      border-bottom: 1px solid #EEE;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr { background: var(--azul-claro); }
+
+    th {
+      padding: 12px 18px;
+      text-align: left;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      color: var(--azul-uaa);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    td {
+      padding: 13px 18px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--gris-claro); }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .badge-completada  { background: #D5F5E3; color: #1E8449; }
+    .badge-progreso    { background: #FEF9E7; color: #B7950B; }
+    .badge-revision    { background: #EBF5FB; color: #1A5276; }
+
+    .btn-ver {
+      background: var(--azul-claro);
+      color: var(--azul-uaa);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      transition: background 0.2s;
+    }
+    .btn-ver:hover { background: #cdddf7; }
+
+    /* =============================================
+       ---- PANTALLA 3: CONSENTIMIENTO ----
+    ============================================= */
+    #consentimiento { min-height: 100vh; background: var(--gris-claro); }
+    #consentimiento.activa { display: block; }
+
+    .form-container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+
+    .form-card {
+      background: var(--blanco);
+      border-radius: 14px;
+      box-shadow: var(--sombra);
+      padding: 36px 40px;
+    }
+
+    .form-titulo {
+      font-size: 1.15rem;
+      color: var(--azul-uaa);
+      margin-bottom: 6px;
+    }
+
+    .form-subtitulo {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #EEE;
+    }
+
+    .texto-confidencial {
+      background: var(--azul-claro);
+      border-left: 4px solid var(--azul-uaa);
+      border-radius: 0 8px 8px 0;
+      padding: 20px 22px;
+      font-size: 0.87rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 28px;
+    }
+
+    .firma-area {
+      border: 2px dashed #CCC;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 24px;
+      background: #FAFAFA;
+    }
+
+    .firma-area p { font-size: 0.85rem; color: #999; margin-bottom: 10px; }
+
+    canvas#firmaCanvas {
+      border: 1.5px solid #DDD;
+      border-radius: 6px;
+      background: var(--blanco);
+      cursor: crosshair;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .btn-limpiar-firma {
+      margin-top: 10px;
+      background: none;
+      border: 1px solid #CCC;
+      border-radius: 6px;
+      padding: 5px 14px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .form-acciones {
+      display: flex;
+      gap: 14px;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .btn-secondary {
+      background: var(--blanco);
+      color: var(--azul-uaa);
+      border: 2px solid var(--azul-uaa);
+      border-radius: 8px;
+      padding: 11px 22px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: var(--azul-claro); }
+
+    /* =============================================
+       ---- PANTALLA 4: FORMULARIO VALORACIÓN ----
+    ============================================= */
+    #formulario { min-height: 100vh; background: var(--gris-claro); }
+    #formulario.activa { display: block; }
+
+    /* Barra de progreso por secciones */
+    .barra-progreso {
+      background: var(--blanco);
+      border-bottom: 1px solid #EEE;
+      padding: 16px 32px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+    }
+
+    .paso {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: #AAA;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .paso.activo { color: var(--azul-uaa); }
+    .paso.completado { color: var(--verde-ok); }
+
+    .paso-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: #EEE;
+      color: #AAA;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .paso.activo    .paso-num { background: var(--azul-uaa); color: var(--blanco); }
+    .paso.completado .paso-num { background: var(--verde-ok); color: var(--blanco); }
+
+    .paso-sep { color: #CCC; font-size: 0.8rem; }
+
+    /* Secciones del formulario */
+    .seccion-form { display: none; }
+    .seccion-form.activa { display: block; }
+
+    .seccion-form h3 {
+      font-size: 1rem;
+      color: var(--azul-uaa);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--azul-claro);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .seccion-num {
+      background: var(--azul-uaa);
+      color: var(--blanco);
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Grupos de campos */
+    .campo-grupo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .campo-grupo.col-1 { grid-template-columns: 1fr; }
+    .campo-grupo.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .campo label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    .campo input[type="text"],
+    .campo input[type="number"],
+    .campo input[type="date"],
+    .campo select,
+    .campo textarea {
+      width: 100%;
+      border: 1.5px solid #DDD;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      font-family: 'Open Sans', sans-serif;
+      transition: border-color 0.2s;
+      background: var(--blanco);
+    }
+
+    .campo input:focus,
+    .campo select:focus,
+    .campo textarea:focus {
+      outline: none;
+      border-color: var(--azul-medio);
+      box-shadow: 0 0 0 3px rgba(0,85,179,0.08);
+    }
+
+    /* Campos de casilla (checkboxes agrupados) */
+    .campo-casillas label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .casillas-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .casilla-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gris-claro);
+      border: 1.5px solid #DDD;
+      border-radius: 7px;
+      padding: 7px 12px;
+      cursor: pointer;
+      font-size: 0.83rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .casilla-item:hover { border-color: var(--azul-medio); }
+    .casilla-item input { cursor: pointer; accent-color: var(--azul-uaa); }
+    .casilla-item.marcada { background: var(--azul-claro); border-color: var(--azul-uaa); }
+
+    /* Sección solo-femenino */
+    .aviso-genero {
+      background: #FFF8E1;
+      border-left: 4px solid var(--dorado-uaa);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      font-size: 0.83rem;
+      color: #7D6608;
+      margin-bottom: 18px;
+    }
+
+    /* Instrumento clínico: escala Sí/No */
+    .escala-pregunta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #EEE;
+      margin-bottom: 8px;
+      background: #FAFAFA;
+      font-size: 0.88rem;
+    }
+
+    .escala-pregunta:nth-child(even) { background: var(--blanco); }
+
+    .escala-pregunta span { flex: 1; }
+
+    .resp-sinno {
+      display: flex;
+      gap: 10px;
+    }
+
+    .resp-sinno label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1.5px solid #DDD;
+      transition: all 0.15s;
+    }
+
+    .resp-sinno input[type="radio"] { accent-color: var(--azul-uaa); }
+
+    .resp-sinno label:has(input:checked) {
+      background: var(--azul-claro);
+      border-color: var(--azul-uaa);
+      color: var(--azul-uaa);
+    }
+
+    /* Puntaje instrumento */
+    .puntaje-caja {
+      background: var(--azul-claro);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .puntaje-caja .puntaje-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--azul-uaa);
+    }
+
+    .puntaje-caja .puntaje-inter {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--verde-ok);
+    }
+
+    /* Navegación entre secciones */
+    .nav-secciones {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0 0;
+      border-top: 1px solid #EEE;
+      margin-top: 24px;
+    }
+
+    .btn-nav {
+      background: var(--azul-uaa);
+      color: var(--blanco);
+      border: none;
+      border-radius: 8px;
+      padding: 11px 24px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: var(--azul-medio); }
+    .btn-nav:disabled { background: #CCC; cursor: not-allowed; }
+
+    .btn-nav-prev {
+      background: var(--blanco);
+      color: var(--azul-uaa);
+      border: 2px solid var(--azul-uaa);
+    }
+    .btn-nav-prev:hover { background: var(--azul-claro); }
+
+    .indicador-seccion {
+      font-size: 0.85rem;
+      color: #888;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer {
+      background: var(--azul-uaa);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 16px;
+      font-size: 0.78rem;
+      margin-top: 40px;
+    }
+
+    /* =============================================
+       RESPONSIVE básico
+    ============================================= */
+    @media (max-width: 600px) {
+      .campo-grupo { grid-template-columns: 1fr; }
+      .campo-grupo.col-3 { grid-template-columns: 1fr; }
+      .bienvenida { flex-direction: column; gap: 16px; }
+      .form-card { padding: 24px 18px; }
+      .header { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================================================
+     PANTALLA 1: LOGIN
+================================================== -->
+<div id="login" class="pantalla activa">
+  <div class="login-card">
+
+    <!-- Logo UAA SVG -->
+    <svg class="login-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="48" fill="#003087" stroke="#C8962A" stroke-width="3"/>
+      <text x="50" y="42" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="18" font-weight="bold">UAA</text>
+      <text x="50" y="62" text-anchor="middle" fill="#C8962A" font-family="Montserrat,sans-serif" font-size="8" font-weight="600">ENFERMERÍA</text>
+      <text x="50" y="74" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="Montserrat,sans-serif" font-size="6">Ciencias de la Salud</text>
+    </svg>
+
+    <h2>Sistema de Valoración</h2>
+    <p>Adulto Mayor — Departamento de Enfermería</p>
+
+    <!-- Selector de rol (para el prototipo) -->
+    <select id="rolSelect">
+      <option value="">-- Seleccione su rol --</option>
+      <option value="estudiante">Estudiante</option>
+      <option value="profesor">Profesor</option>
+      <option value="coordinador">Coordinación / Jefe de Departamento</option>
+    </select>
+
+    <input type="text" id="inputId" placeholder="Matrícula / ID de empleado" />
+    <input type="password" placeholder="Contraseña" />
+
+    <div class="confidencialidad-check">
+      <input type="checkbox" id="checkConf" />
+      <label for="checkConf">
+        He leído y acepto el aviso de confidencialidad y el manejo de datos personales conforme a la LGPDPPSO.
+      </label>
+    </div>
+
+    <button class="btn-primary" onclick="iniciarSesion()">INGRESAR</button>
+  </div>
+</div>
+
+
+<!-- ==================================================
+     PANTALLA 2: DASHBOARD
+================================================== -->
+<div id="dashboard" class="pantalla">
+
+  <div class="header">
+    <svg class="logo-uaa" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="48" fill="white" fill-opacity="0.15" stroke="#C8962A" stroke-width="2"/>
+      <text x="50" y="44" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="18" font-weight="bold">UAA</text>
+      <text x="50" y="62" text-anchor="middle" fill="#C8962A" font-family="Montserrat,sans-serif" font-size="7.5" font-weight="600">ENFERMERÍA</text>
+    </svg>
+    <div class="header-textos">
+      <h1>Sistema de Valoración del Adulto Mayor</h1>
+      <p>Centro de Ciencias de la Salud — Departamento de Enfermería</p>
+    </div>
+    <div class="header-right">
+      <span class="badge-usuario" id="badgeUsuario">Estudiante</span>
+      <button class="btn-cerrar" onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="dashboard-body">
+
+    <div class="bienvenida">
+      <div>
+        <h2 id="saludo">Bienvenido/a</h2>
+        <p>Semestre en curso: Enero–Junio 2026 &nbsp;|&nbsp; 7° Semestre Enfermería</p>
+      </div>
+      <button class="btn-nueva-val" onclick="irConsentimiento()">+ Nueva Valoración</button>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="numero">12</div>
+        <div class="etiqueta">Valoraciones realizadas</div>
+      </div>
+      <div class="stat-card dorado">
+        <div class="numero">3</div>
+        <div class="etiqueta">En progreso</div>
+      </div>
+      <div class="stat-card verde">
+        <div class="numero">9</div>
+        <div class="etiqueta">Completadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="numero">150</div>
+        <div class="etiqueta">Estudiantes en el semestre</div>
+      </div>
+    </div>
+
+    <!-- Tabla de valoraciones recientes -->
+    <div class="seccion-tabla">
+      <h3>📋 Valoraciones recientes</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID Valoración</th>
+            <th>Paciente</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#V-0045</td>
+            <td>Pac. 001 — F, 74 años</td>
+            <td>03/04/2026</td>
+            <td><span class="badge badge-completada">Completada</span></td>
+            <td><button class="btn-ver">Ver</button></td>
+          </tr>
+          <tr>
+            <td>#V-0044</td>
+            <td>Pac. 002 — M, 68 años</td>
+            <td>02/04/2026</td>
+            <td><span class="badge badge-revision">En revisión</span></td>
+            <td><button class="btn-ver">Ver</button></td>
+          </tr>
+          <tr>
+            <td>#V-0043</td>
+            <td>Pac. 003 — F, 81 años</td>
+            <td>01/04/2026</td>
+            <td><span class="badge badge-progreso">En progreso</span></td>
+            <td><button class="btn-ver">Ver</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    © 2026 Universidad Autónoma de Aguascalientes — Departamento de Enfermería &nbsp;|&nbsp; Datos protegidos conforme a LGPDPPSO
+  </div>
+</div>
+
+
+<!-- ==================================================
+     PANTALLA 3: AVISO DE CONFIDENCIALIDAD
+================================================== -->
+<div id="consentimiento" class="pantalla">
+
+  <div class="header">
+    <svg class="logo-uaa" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="48" fill="white" fill-opacity="0.15" stroke="#C8962A" stroke-width="2"/><text x="50" y="44" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="18" font-weight="bold">UAA</text><text x="50" y="62" text-anchor="middle" fill="#C8962A" font-family="Montserrat,sans-serif" font-size="7.5" font-weight="600">ENFERMERÍA</text></svg>
+    <div class="header-textos">
+      <h1>Nueva Valoración</h1>
+      <p>Paso 1 de 2 — Consentimiento informado</p>
+    </div>
+    <div class="header-right">
+      <button class="btn-cerrar" onclick="mostrar('dashboard')">← Regresar</button>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="form-card">
+      <h2 class="form-titulo">Aviso de Confidencialidad y Consentimiento Informado</h2>
+      <p class="form-subtitulo">El paciente debe leer y aceptar el siguiente aviso antes de iniciar la valoración.</p>
+
+      <div class="texto-confidencial">
+        Antes de iniciar la presente encuesta, le informamos que su participación es
+        <strong>completamente voluntaria</strong> y tiene como finalidad valorar el estado de salud,
+        así como identificar posibles riesgos, con el propósito de contribuir a la prevención de
+        enfermedades. La información que usted proporcione será tratada con
+        <strong>estricta confidencialidad</strong> y utilizada únicamente con fines académicos y de
+        investigación. Sus datos personales serán protegidos conforme a lo establecido en la
+        <em>Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados</em>
+        y demás normativas aplicables en México, garantizando en todo momento su privacidad,
+        anonimato y el resguardo adecuado de la información.
+        <br/><br/>
+        Al continuar, usted manifiesta haber sido informado(a) sobre el objetivo de este
+        instrumento y acepta participar de manera libre y consciente.
+      </div>
+
+      <!-- Firma digital en canvas -->
+      <div class="firma-area">
+        <p>Firma digital del paciente (dibuje con el cursor o dedo)</p>
+        <canvas id="firmaCanvas" width="500" height="130"></canvas>
+        <button class="btn-limpiar-firma" onclick="limpiarFirma()">🗑 Limpiar firma</button>
+      </div>
+
+      <div class="form-acciones">
+        <button class="btn-secondary" onclick="mostrar('dashboard')">Cancelar</button>
+        <button class="btn-primary" style="width:auto; padding: 12px 28px;" onclick="irFormulario()">
+          Acepto y continúo →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================================================
+     PANTALLA 4: FORMULARIO DE VALORACIÓN
+================================================== -->
+<div id="formulario" class="pantalla">
+
+  <div class="header">
+    <svg class="logo-uaa" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="48" fill="white" fill-opacity="0.15" stroke="#C8962A" stroke-width="2"/><text x="50" y="44" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="18" font-weight="bold">UAA</text><text x="50" y="62" text-anchor="middle" fill="#C8962A" font-family="Montserrat,sans-serif" font-size="7.5" font-weight="600">ENFERMERÍA</text></svg>
+    <div class="header-textos">
+      <h1>Guía de Valoración del Adulto Mayor</h1>
+      <p>Referente teórico: Dorotea Elizabeth Orem</p>
+    </div>
+    <div class="header-right">
+      <button class="btn-cerrar" onclick="mostrar('dashboard')">← Salir</button>
+    </div>
+  </div>
+
+  <!-- Barra de progreso -->
+  <div class="barra-progreso" id="barraProgreso">
+    <div class="paso activo" id="paso-0"><div class="paso-num">1</div> Datos generales</div>
+    <span class="paso-sep">›</span>
+    <div class="paso" id="paso-1"><div class="paso-num">2</div> Entorno y patrón</div>
+    <span class="paso-sep">›</span>
+    <div class="paso" id="paso-2"><div class="paso-num">3</div> Autocuidado</div>
+    <span class="paso-sep">›</span>
+    <div class="paso" id="paso-3"><div class="paso-num">4</div> Desarrollo</div>
+    <span class="paso-sep">›</span>
+    <div class="paso" id="paso-4"><div class="paso-num">5</div> Mini Mental</div>
+    <span class="paso-sep">›</span>
+    <div class="paso" id="paso-5"><div class="paso-num">6</div> Depresión GDS</div>
+    <span class="paso-sep">›</span>
+    <div class="paso" id="paso-6"><div class="paso-num">7</div> Índice Katz</div>
+  </div>
+
+  <div class="form-container" style="max-width:860px;">
+    <div class="form-card">
+
+      <!-- ===== SECCIÓN 1: Datos generales ===== -->
+      <div class="seccion-form activa" id="sec-0">
+        <h3><span class="seccion-num">I</span> Factores Condicionantes Básicos — Datos del Paciente</h3>
+
+        <div class="campo-grupo">
+          <div class="campo">
+            <label>Edad</label>
+            <input type="number" id="edadPaciente" placeholder="Ej. 72" min="60" max="110" onchange="verificarGenero()"/>
+          </div>
+          <div class="campo">
+            <label>Género</label>
+            <select id="generoPaciente" onchange="verificarGenero()">
+              <option value="">-- Seleccionar --</option>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo-grupo">
+          <div class="campo">
+            <label>Lugar de nacimiento</label>
+            <input type="text" placeholder="Ciudad, Estado"/>
+          </div>
+          <div class="campo">
+            <label>Fecha de ingreso</label>
+            <input type="date"/>
+          </div>
+        </div>
+
+        <div class="campo-grupo col-3">
+          <div class="campo">
+            <label>Religión</label>
+            <input type="text" placeholder="Ej. Católica"/>
+          </div>
+          <div class="campo">
+            <label>Escolaridad</label>
+            <select>
+              <option value="">-- Seleccionar --</option>
+              <option>Sin escolaridad</option>
+              <option>Primaria</option>
+              <option>Secundaria</option>
+              <option>Preparatoria</option>
+              <option>Licenciatura o más</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Estado civil</label>
+            <select>
+              <option value="">-- Seleccionar --</option>
+              <option>Soltero/a</option>
+              <option>Casado/a</option>
+              <option>Viudo/a</option>
+              <option>Divorciado/a</option>
+              <option>Unión libre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo-grupo">
+          <div class="campo">
+            <label>Ocupación</label>
+            <input type="text" placeholder="Ej. Jubilado/a"/>
+          </div>
+          <div class="campo">
+            <label>Dependencia / Institución</label>
+            <select>
+              <option value="">-- Seleccionar --</option>
+              <option>DIF Aguascalientes</option>
+              <option>IMSS UMF No. 1</option>
+              <option>Casa del Adulto Mayor</option>
+              <option>ISSSTE</option>
+              <option>Otra</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Servicios de salud (casillas) -->
+        <div class="campo-casillas" style="margin-top:8px;">
+          <label>¿Con qué servicios de salud cuenta?</label>
+          <div class="casillas-grid">
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> IMSS</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> ISSSTE</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> ISEA</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Particular</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Seguro Popular</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Otro</label>
+          </div>
+        </div>
+
+        <div class="nav-secciones">
+          <span></span>
+          <span class="indicador-seccion">Sección 1 de 7</span>
+          <button class="btn-nav" onclick="cambiarSeccion(1)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- ===== SECCIÓN 2: Entorno y patrón de vida ===== -->
+      <div class="seccion-form" id="sec-1">
+        <h3><span class="seccion-num">I</span> Características del Entorno y Patrón de Vida</h3>
+
+        <div class="campo-casillas">
+          <label>Tipo de piso del hogar</label>
+          <div class="casillas-grid">
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Mosaico</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Cemento</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Tierra</label>
+          </div>
+        </div>
+
+        <div class="campo-grupo" style="margin-top:16px;">
+          <div class="campo">
+            <label>Relación familiar</label>
+            <select>
+              <option value="">-- Seleccionar --</option>
+              <option>Buena</option>
+              <option>Regular</option>
+              <option>Mala</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Ingreso económico familiar</label>
+            <select>
+              <option value="">-- Seleccionar --</option>
+              <option>Menos de 1 s.m.</option>
+              <option>1–2 s.m.</option>
+              <option>Más de 3 s.m.</option>
+              <option>Ninguno</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo-casillas">
+          <label>Estado nutricional</label>
+          <div class="casillas-grid">
+            <label class="casilla-item"><input type="radio" name="nutricional" onchange="toggleMarcada(this)"/> Desnutrición</label>
+            <label class="casilla-item"><input type="radio" name="nutricional" onchange="toggleMarcada(this)"/> Normal</label>
+            <label class="casilla-item"><input type="radio" name="nutricional" onchange="toggleMarcada(this)"/> Sobrepeso</label>
+            <label class="casilla-item"><input type="radio" name="nutricional" onchange="toggleMarcada(this)"/> Obesidad</label>
+          </div>
+        </div>
+
+        <div class="campo-grupo" style="margin-top:16px;">
+          <div class="campo">
+            <label>¿Tiene presencia de alguna enfermedad?</label>
+            <input type="text" placeholder="Especifique..."/>
+          </div>
+          <div class="campo">
+            <label>¿Tiene tratamiento?</label>
+            <input type="text" placeholder="Especifique..."/>
+          </div>
+        </div>
+
+        <div class="nav-secciones">
+          <button class="btn-nav btn-nav-prev" onclick="cambiarSeccion(0)">← Anterior</button>
+          <span class="indicador-seccion">Sección 2 de 7</span>
+          <button class="btn-nav" onclick="cambiarSeccion(2)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- ===== SECCIÓN 3: Requisitos de autocuidado ===== -->
+      <div class="seccion-form" id="sec-2">
+        <h3><span class="seccion-num">II</span> Requisitos de Autocuidado</h3>
+
+        <p style="font-size:0.85rem; color:#888; margin-bottom:16px;">A) Universales</p>
+
+        <div class="campo-grupo col-3">
+          <div class="campo">
+            <label>Frecuencia respiratoria (x')</label>
+            <input type="number" placeholder="Ej. 18"/>
+          </div>
+          <div class="campo">
+            <label>Frecuencia cardíaca (x')</label>
+            <input type="number" placeholder="Ej. 72"/>
+          </div>
+          <div class="campo">
+            <label>Tensión arterial</label>
+            <input type="text" placeholder="120/80"/>
+          </div>
+        </div>
+
+        <div class="campo-grupo col-3">
+          <div class="campo">
+            <label>Peso (kg)</label>
+            <input type="number" placeholder="Ej. 65"/>
+          </div>
+          <div class="campo">
+            <label>Talla (mts)</label>
+            <input type="number" step="0.01" placeholder="Ej. 1.62"/>
+          </div>
+          <div class="campo">
+            <label>IMC (%)</label>
+            <input type="number" step="0.1" placeholder="Calculado"/>
+          </div>
+        </div>
+
+        <div class="campo-grupo">
+          <div class="campo">
+            <label>Consumo habitual de agua (litros/día)</label>
+            <input type="number" step="0.5" placeholder="Ej. 1.5"/>
+          </div>
+          <div class="campo">
+            <label>No. de comidas al día</label>
+            <input type="number" placeholder="Ej. 3"/>
+          </div>
+        </div>
+
+        <div class="campo-grupo">
+          <div class="campo">
+            <label>Horas de sueño nocturno</label>
+            <input type="number" placeholder="Ej. 6"/>
+          </div>
+          <div class="campo">
+            <label>¿Tiene dificultad para conciliar el sueño?</label>
+            <select>
+              <option value="">-- Seleccionar --</option>
+              <option>Sí</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="nav-secciones">
+          <button class="btn-nav btn-nav-prev" onclick="cambiarSeccion(1)">← Anterior</button>
+          <span class="indicador-seccion">Sección 3 de 7</span>
+          <button class="btn-nav" onclick="cambiarSeccion(3)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- ===== SECCIÓN 4: Requisitos de desarrollo ===== -->
+      <div class="seccion-form" id="sec-3">
+        <h3><span class="seccion-num">II</span> Requisitos de Desarrollo y Desviaciones de la Salud</h3>
+
+        <!-- Sección solo para género Femenino -->
+        <div id="bloque-femenino" style="display:none;">
+          <div class="aviso-genero">
+            ⚠️ Las siguientes preguntas aplican únicamente para pacientes de género <strong>Femenino</strong>.
+          </div>
+          <div class="campo-grupo col-3">
+            <div class="campo">
+              <label>Edad de menarca</label>
+              <input type="number" placeholder="Ej. 13"/>
+            </div>
+            <div class="campo">
+              <label>Menopausia (edad)</label>
+              <input type="number" placeholder="Ej. 50"/>
+            </div>
+            <div class="campo">
+              <label>Fecha último papanicolau</label>
+              <input type="date"/>
+            </div>
+          </div>
+          <div class="campo-grupo">
+            <div class="campo">
+              <label>Fecha exploración de mama</label>
+              <input type="date"/>
+            </div>
+            <div class="campo">
+              <label>No. de gestas</label>
+              <input type="number" placeholder="Ej. 3"/>
+            </div>
+          </div>
+          <hr style="margin: 20px 0; border-color: #EEE;"/>
+        </div>
+
+        <!-- Sección solo para género Masculino -->
+        <div id="bloque-masculino" style="display:none;">
+          <div class="aviso-genero" style="border-color:#003087; background:#EBF5FB; color:#1A5276;">
+            ℹ️ Las siguientes preguntas aplican únicamente para pacientes de género <strong>Masculino</strong>.
+          </div>
+          <div class="campo-grupo">
+            <div class="campo">
+              <label>Fecha último examen de próstata</label>
+              <input type="date"/>
+            </div>
+            <div class="campo">
+              <label>Resultado</label>
+              <input type="text" placeholder="Especifique..."/>
+            </div>
+          </div>
+          <hr style="margin: 20px 0; border-color: #EEE;"/>
+        </div>
+
+        <div class="campo-casillas">
+          <label>Cambios súbitos en las condiciones de vida</label>
+          <div class="casillas-grid">
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Residencia</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Trabajo</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Familia</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Ingresos</label>
+          </div>
+        </div>
+
+        <div class="campo-grupo" style="margin-top:16px;">
+          <div class="campo">
+            <label>¿Tiene enfermedad crónica?</label>
+            <input type="text" placeholder="Especifique..."/>
+          </div>
+          <div class="campo">
+            <label>¿Presenta problemas psicológicos?</label>
+            <select>
+              <option value="">-- Seleccionar --</option>
+              <option>Sí</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="nav-secciones">
+          <button class="btn-nav btn-nav-prev" onclick="cambiarSeccion(2)">← Anterior</button>
+          <span class="indicador-seccion">Sección 4 de 7</span>
+          <button class="btn-nav" onclick="cambiarSeccion(4)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- ===== SECCIÓN 5: Mini Mental (MMSE) ===== -->
+      <div class="seccion-form" id="sec-4">
+        <h3><span class="seccion-num">5</span> Mini Mental State Examination (MMSE)</h3>
+        <p style="font-size:0.83rem; color:#888; margin-bottom:18px;">
+          Instrumento estandarizdo de evaluación cognitiva. Puntaje máximo: <strong>30 puntos</strong>.
+          Basado en Folstein et al. (1975).
+        </p>
+
+        <!-- Orientación temporal -->
+        <p style="font-size:0.85rem; font-weight:700; color:#555; margin-bottom:10px;">Orientación temporal (máx. 5 pts)</p>
+
+        <div id="preguntas-mmse">
+          <!-- Las preguntas se generan con JS -->
+        </div>
+
+        <div class="puntaje-caja" id="puntaje-mmse-caja">
+          <div>
+            <div style="font-size:0.82rem; color:#888;">Puntaje obtenido</div>
+            <div class="puntaje-num" id="puntaje-mmse">0</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.82rem; color:#888; margin-bottom:4px;">Interpretación</div>
+            <div class="puntaje-inter" id="inter-mmse">—</div>
+          </div>
+        </div>
+
+        <div class="nav-secciones">
+          <button class="btn-nav btn-nav-prev" onclick="cambiarSeccion(3)">← Anterior</button>
+          <span class="indicador-seccion">Sección 5 de 7</span>
+          <button class="btn-nav" onclick="cambiarSeccion(5)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- ===== SECCIÓN 6: GDS-15 Depresión ===== -->
+      <div class="seccion-form" id="sec-5">
+        <h3><span class="seccion-num">6</span> Escala de Depresión Geriátrica (GDS-15)</h3>
+        <p style="font-size:0.83rem; color:#888; margin-bottom:18px;">
+          Puntaje máximo: <strong>15 puntos</strong>. Sheikh & Yesavage (1986). Responda Sí o No.
+        </p>
+
+        <div id="preguntas-gds"></div>
+
+        <div class="puntaje-caja">
+          <div>
+            <div style="font-size:0.82rem; color:#888;">Puntaje obtenido</div>
+            <div class="puntaje-num" id="puntaje-gds">0</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.82rem; color:#888; margin-bottom:4px;">Interpretación</div>
+            <div class="puntaje-inter" id="inter-gds">—</div>
+          </div>
+        </div>
+
+        <div class="nav-secciones">
+          <button class="btn-nav btn-nav-prev" onclick="cambiarSeccion(4)">← Anterior</button>
+          <span class="indicador-seccion">Sección 6 de 7</span>
+          <button class="btn-nav" onclick="cambiarSeccion(6)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- ===== SECCIÓN 7: Índice de Katz ===== -->
+      <div class="seccion-form" id="sec-6">
+        <h3><span class="seccion-num">7</span> Índice de Katz — Actividades de la Vida Diaria</h3>
+        <p style="font-size:0.83rem; color:#888; margin-bottom:18px;">
+          Evalúa la independencia en actividades básicas. <strong>0 = independiente, 1 = dependiente</strong> por actividad.
+        </p>
+
+        <div id="preguntas-katz"></div>
+
+        <div class="puntaje-caja">
+          <div>
+            <div style="font-size:0.82rem; color:#888;">Puntaje (dependencias)</div>
+            <div class="puntaje-num" id="puntaje-katz">0</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.82rem; color:#888; margin-bottom:4px;">Interpretación</div>
+            <div class="puntaje-inter" id="inter-katz">—</div>
+          </div>
+        </div>
+
+        <div class="nav-secciones">
+          <button class="btn-nav btn-nav-prev" onclick="cambiarSeccion(5)">← Anterior</button>
+          <span class="indicador-seccion">Sección 7 de 7</span>
+          <button class="btn-nav" style="background:var(--verde-ok);" onclick="finalizarValoracion()">
+            ✓ Finalizar y guardar
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /form-card -->
+  </div><!-- /form-container -->
+</div><!-- /formulario -->
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+<script>
+
+// =============================================
+// NAVEGACIÓN ENTRE PANTALLAS
+// =============================================
+function mostrar(id) {
+  document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+  document.getElementById(id).classList.add('activa');
+}
+
+// =============================================
+// LOGIN
+// =============================================
+function iniciarSesion() {
+  const rol  = document.getElementById('rolSelect').value;
+  const id   = document.getElementById('inputId').value.trim();
+  const conf = document.getElementById('checkConf').checked;
+
+  if (!rol)  { alert('Por favor seleccione su rol.'); return; }
+  if (!id)   { alert('Por favor ingrese su matrícula o ID.'); return; }
+  if (!conf) { alert('Debe aceptar el aviso de confidencialidad para continuar.'); return; }
+
+  // Actualizar dashboard con el rol
+  const roles = {
+    estudiante:   'Estudiante',
+    profesor:     'Profesor',
+    coordinador:  'Coordinación'
+  };
+  document.getElementById('badgeUsuario').textContent = roles[rol];
+  document.getElementById('saludo').textContent = 'Bienvenido/a, ' + id;
+
+  mostrar('dashboard');
+}
+
+function cerrarSesion() {
+  mostrar('login');
+}
+
+// =============================================
+// NAVEGACIÓN DASHBOARD → CONSENTIMIENTO → FORM
+// =============================================
+function irConsentimiento() {
+  mostrar('consentimiento');
+  iniciarFirma();
+}
+
+function irFormulario() {
+  mostrar('formulario');
+  cambiarSeccion(0);
+  generarPreguntasMmse();
+  generarPreguntasGds();
+  generarPreguntasKatz();
+}
+
+// =============================================
+// FIRMA DIGITAL EN CANVAS
+// =============================================
+var dibujando = false;
+var ctx;
+
+function iniciarFirma() {
+  var canvas = document.getElementById('firmaCanvas');
+  if (!canvas) return;
+  ctx = canvas.getContext('2d');
+  ctx.strokeStyle = '#003087';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+
+  canvas.onmousedown = function(e) { dibujando = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); };
+  canvas.onmousemove = function(e) { if (!dibujando) return; ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); };
+  canvas.onmouseup   = function()  { dibujando = false; };
+  canvas.onmouseleave= function()  { dibujando = false; };
+
+  // Soporte táctil
+  canvas.ontouchstart = function(e) {
+    e.preventDefault();
+    dibujando = true;
+    var r = canvas.getBoundingClientRect();
+    ctx.beginPath();
+    ctx.moveTo(e.touches[0].clientX - r.left, e.touches[0].clientY - r.top);
+  };
+  canvas.ontouchmove = function(e) {
+    e.preventDefault();
+    if (!dibujando) return;
+    var r = canvas.getBoundingClientRect();
+    ctx.lineTo(e.touches[0].clientX - r.left, e.touches[0].clientY - r.top);
+    ctx.stroke();
+  };
+  canvas.ontouchend = function() { dibujando = false; };
+}
+
+function limpiarFirma() {
+  var canvas = document.getElementById('firmaCanvas');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// =============================================
+// NAVEGACIÓN ENTRE SECCIONES DEL FORMULARIO
+// =============================================
+var seccionActual = 0;
+var totalSecciones = 7;
+
+function cambiarSeccion(n) {
+  // Ocultar sección actual
+  document.getElementById('sec-' + seccionActual).classList.remove('activa');
+  document.getElementById('paso-' + seccionActual).classList.remove('activo');
+  document.getElementById('paso-' + seccionActual).classList.add('completado');
+
+  seccionActual = n;
+
+  // Mostrar nueva sección
+  document.getElementById('sec-' + seccionActual).classList.add('activa');
+  document.getElementById('paso-' + seccionActual).classList.remove('completado');
+  document.getElementById('paso-' + seccionActual).classList.add('activo');
+
+  // Scroll al inicio del formulario
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// =============================================
+// FILTRO POR GÉNERO (Sección 4)
+// =============================================
+function verificarGenero() {
+  var genero = document.getElementById('generoPaciente').value;
+  var fem = document.getElementById('bloque-femenino');
+  var mas = document.getElementById('bloque-masculino');
+  if (fem) fem.style.display = (genero === 'F') ? 'block' : 'none';
+  if (mas) mas.style.display = (genero === 'M') ? 'block' : 'none';
+}
+
+// =============================================
+// CASILLAS: marcar/desmarcar estilo
+// =============================================
+function toggleMarcada(input) {
+  var label = input.closest('.casilla-item');
+  if (input.type === 'radio') {
+    // Para radio: desmarcar todos del mismo name
+    document.querySelectorAll('input[name="' + input.name + '"]').forEach(function(r) {
+      r.closest('.casilla-item').classList.remove('marcada');
+    });
+  }
+  if (input.checked) {
+    label.classList.add('marcada');
+  } else {
+    label.classList.remove('marcada');
+  }
+}
+
+// =============================================
+// MINI MENTAL (MMSE) — preguntas y puntaje
+// =============================================
+var preguntasMmse = [
+  { texto: '¿En qué año estamos?',              pts: 1 },
+  { texto: '¿En qué estación del año estamos?', pts: 1 },
+  { texto: '¿En qué día (fecha) estamos?',      pts: 1 },
+  { texto: '¿En qué mes estamos?',              pts: 1 },
+  { texto: '¿En qué día de la semana?',         pts: 1 },
+  { texto: '¿En qué hospital o lugar estamos?', pts: 1 },
+  { texto: '¿En qué piso o planta estamos?',    pts: 1 },
+  { texto: '¿En qué ciudad estamos?',           pts: 1 },
+  { texto: '¿En qué provincia o estado?',       pts: 1 },
+  { texto: '¿En qué país estamos?',             pts: 1 }
+];
+
+function generarPreguntasMmse() {
+  var contenedor = document.getElementById('preguntas-mmse');
+  if (!contenedor || contenedor.innerHTML !== '') return;
+  preguntasMmse.forEach(function(p, i) {
+    contenedor.innerHTML += `
+      <div class="escala-pregunta">
+        <span>${i+1}. ${p.texto}</span>
+        <div class="resp-sinno">
+          <label><input type="radio" name="mmse${i}" value="1" onchange="calcularMmse()"/> Correcto</label>
+          <label><input type="radio" name="mmse${i}" value="0" onchange="calcularMmse()"/> Incorrecto</label>
+        </div>
+      </div>`;
+  });
+}
+
+function calcularMmse() {
+  var total = 0;
+  for (var i = 0; i < preguntasMmse.length; i++) {
+    var sel = document.querySelector('input[name="mmse' + i + '"]:checked');
+    if (sel) total += parseInt(sel.value);
+  }
+  document.getElementById('puntaje-mmse').textContent = total;
+  var inter = total >= 27 ? 'Normal' : total >= 24 ? 'Sospecha patológica' : total >= 12 ? 'Deterioro' : 'Demencia';
+  var col   = total >= 27 ? 'var(--verde-ok)' : total >= 24 ? 'var(--dorado-uaa)' : 'var(--rojo-error)';
+  var el = document.getElementById('inter-mmse');
+  el.textContent = inter;
+  el.style.color = col;
+}
+
+// =============================================
+// GDS-15 — preguntas y puntaje automático
+// =============================================
+// puntua=true → un punto si responde "Sí"
+// puntua=false → un punto si responde "No"
+var preguntasGds = [
+  { texto: '¿Está satisfecho/a con su vida en general?',                               puntaSi: false },
+  { texto: '¿Ha abandonado muchas de sus actividades e intereses?',                    puntaSi: true  },
+  { texto: '¿Siente que su vida está vacía?',                                          puntaSi: true  },
+  { texto: '¿Se siente aburrido/a con frecuencia?',                                    puntaSi: true  },
+  { texto: '¿Se siente de buen humor la mayor parte del tiempo?',                      puntaSi: false },
+  { texto: '¿Tiene miedo de que le pase algo malo?',                                   puntaSi: true  },
+  { texto: '¿Se siente feliz la mayor parte del tiempo?',                              puntaSi: false },
+  { texto: '¿Se siente a menudo desesperanzado/a?',                                    puntaSi: true  },
+  { texto: '¿Prefiere quedarse en casa en lugar de salir e intentar cosas nuevas?',    puntaSi: true  },
+  { texto: '¿Siente que tiene más problemas de memoria que la mayoría?',               puntaSi: true  },
+  { texto: '¿Cree que estar vivo/a en este momento es maravilloso?',                   puntaSi: false },
+  { texto: '¿Siente que su vida en este momento es bastante inútil?',                  puntaSi: true  },
+  { texto: '¿Se siente lleno/a de energía?',                                           puntaSi: false },
+  { texto: '¿Considera que su situación no tiene remedio?',                            puntaSi: true  },
+  { texto: '¿Cree que la mayoría de las personas son mejores que usted?',              puntaSi: true  }
+];
+
+function generarPreguntasGds() {
+  var contenedor = document.getElementById('preguntas-gds');
+  if (!contenedor || contenedor.innerHTML !== '') return;
+  preguntasGds.forEach(function(p, i) {
+    contenedor.innerHTML += `
+      <div class="escala-pregunta">
+        <span>${i+1}. ${p.texto}</span>
+        <div class="resp-sinno">
+          <label><input type="radio" name="gds${i}" value="si" onchange="calcularGds()"/> Sí</label>
+          <label><input type="radio" name="gds${i}" value="no" onchange="calcularGds()"/> No</label>
+        </div>
+      </div>`;
+  });
+}
+
+function calcularGds() {
+  var total = 0;
+  preguntasGds.forEach(function(p, i) {
+    var sel = document.querySelector('input[name="gds' + i + '"]:checked');
+    if (!sel) return;
+    if (p.puntaSi  && sel.value === 'si') total++;
+    if (!p.puntaSi && sel.value === 'no') total++;
+  });
+  document.getElementById('puntaje-gds').textContent = total;
+  var inter, col;
+  if (total <= 5)      { inter = 'Normal';          col = 'var(--verde-ok)'; }
+  else if (total <= 10){ inter = 'Depresión leve';  col = 'var(--dorado-uaa)'; }
+  else                 { inter = 'Depresión grave'; col = 'var(--rojo-error)'; }
+  var el = document.getElementById('inter-gds');
+  el.textContent = inter;
+  el.style.color = col;
+}
+
+// =============================================
+// ÍNDICE DE KATZ — actividades y puntaje
+// =============================================
+var actividadesKatz = [
+  'Baño',
+  'Vestido',
+  'Uso del WC',
+  'Movilidad',
+  'Continencia',
+  'Alimentación'
+];
+
+function generarPreguntasKatz() {
+  var contenedor = document.getElementById('preguntas-katz');
+  if (!contenedor || contenedor.innerHTML !== '') return;
+  actividadesKatz.forEach(function(a, i) {
+    contenedor.innerHTML += `
+      <div class="escala-pregunta">
+        <span>${i+1}. ${a}</span>
+        <div class="resp-sinno">
+          <label><input type="radio" name="katz${i}" value="0" onchange="calcularKatz()"/> Independiente</label>
+          <label><input type="radio" name="katz${i}" value="1" onchange="calcularKatz()"/> Dependiente</label>
+        </div>
+      </div>`;
+  });
+}
+
+function calcularKatz() {
+  var total = 0;
+  for (var i = 0; i < actividadesKatz.length; i++) {
+    var sel = document.querySelector('input[name="katz' + i + '"]:checked');
+    if (sel) total += parseInt(sel.value);
+  }
+  document.getElementById('puntaje-katz').textContent = total;
+  var inter, col;
+  if (total === 0)     { inter = 'Independiente';       col = 'var(--verde-ok)'; }
+  else if (total <= 2) { inter = 'Dependencia leve';    col = 'var(--dorado-uaa)'; }
+  else                 { inter = 'Dependencia severa';  col = 'var(--rojo-error)'; }
+  var el = document.getElementById('inter-katz');
+  el.textContent = inter;
+  el.style.color = col;
+}
+
+// =============================================
+// FINALIZAR VALORACIÓN
+// =============================================
+function finalizarValoracion() {
+  alert('✅ Valoración guardada exitosamente.\n\nEl resumen estará disponible en el dashboard y podrá exportarse como PDF.');
+  mostrar('dashboard');
+  // Reiniciar sección
+  seccionActual = 0;
+}
+
+</script>
+</body>
+</html>

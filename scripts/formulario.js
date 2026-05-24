@@ -149,8 +149,89 @@ function calcularKatz() {
 // FINALIZAR VALORACIÓN
 // =============================================
 function finalizarValoracion() {
-  alert('✅ Valoración guardada exitosamente.\n\nEl resumen estará disponible en el dashboard y podrá exportarse como PDF.');
-  mostrar('dashboard');
-  // Reiniciar sección
-  seccionActual = 0;
+  const resumen = generarResumenHTML();
+  const ventana = window.open('', '_blank');
+  ventana.document.write(resumen);
+  ventana.document.close();
+  ventana.focus();
+  ventana.print();
+}
+
+function generarResumenHTML() {
+  // Helpers
+  const val  = id => document.getElementById(id)?.value || '—';
+  const sel  = id => document.getElementById(id)?.value || '—';
+  const chks = name => [...document.querySelectorAll(`input[name="${name}"]:checked`)]
+                         .map(el => el.closest('.casilla-item')?.textContent.trim())
+                         .filter(Boolean).join(', ') || '—';
+  const radio = name => document.querySelector(`input[name="${name}"]:checked`)?.value || '—';
+
+  // MMSE — puntaje ya calculado en pantalla
+  const puntajeMmse = document.getElementById('puntaje-mmse')?.textContent || '0';
+  const interMmse   = document.getElementById('inter-mmse')?.textContent   || '—';
+  const puntajeGds  = document.getElementById('puntaje-gds')?.textContent  || '0';
+  const interGds    = document.getElementById('inter-gds')?.textContent    || '—';
+  const puntajeKatz = document.getElementById('puntaje-katz')?.textContent || '0';
+  const interKatz   = document.getElementById('inter-katz')?.textContent   || '—';
+
+  return `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Resumen de Valoración</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; color: #222; margin: 30px; }
+    h1   { font-size: 16px; text-align: center; color: #003087; margin-bottom: 4px; }
+    h2   { font-size: 13px; color: #003087; border-bottom: 1px solid #003087; margin: 18px 0 8px; }
+    p    { margin: 3px 0; }
+    .fila { display: flex; gap: 12px; flex-wrap: wrap; }
+    .campo { flex: 1 1 200px; margin-bottom: 6px; }
+    .etiqueta { font-weight: bold; font-size: 11px; color: #555; }
+    .valor    { font-size: 12px; }
+    .puntaje  { font-size: 20px; font-weight: bold; color: #003087; }
+    .subtitulo { font-size: 11px; color: #888; margin-bottom: 12px; text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+    th, td { border: 1px solid #DDD; padding: 5px 8px; font-size: 11px; }
+    th { background: #F0F4FF; font-weight: bold; }
+    @media print {
+      body { margin: 15px; }
+      button { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Guía de Valoración del Adulto Mayor</h1>
+  <p class="subtitulo">Referente teórico: Dorotea Elizabeth Orem &nbsp;|&nbsp; Fecha: ${new Date().toLocaleDateString('es-MX')}</p>
+
+  <h2>I. Datos del Paciente</h2>
+  <div class="fila">
+    <div class="campo"><div class="etiqueta">Nombre</div><div class="valor">${val('nombrePaciente')}</div></div>
+    <div class="campo"><div class="etiqueta">Edad</div><div class="valor">${val('edadPaciente')}</div></div>
+    <div class="campo"><div class="etiqueta">Género</div><div class="valor">${sel('generoPaciente')}</div></div>
+  </div>
+
+  <h2>V. Mini Mental (MMSE)</h2>
+  <div class="fila">
+    <div class="campo"><div class="etiqueta">Puntaje</div><div class="puntaje">${puntajeMmse} / 30</div></div>
+    <div class="campo"><div class="etiqueta">Interpretación</div><div class="valor">${interMmse}</div></div>
+  </div>
+
+  <h2>VI. Escala de Depresión GDS-15</h2>
+  <div class="fila">
+    <div class="campo"><div class="etiqueta">Puntaje</div><div class="puntaje">${puntajeGds} / 15</div></div>
+    <div class="campo"><div class="etiqueta">Interpretación</div><div class="valor">${interGds}</div></div>
+  </div>
+
+  <h2>VII. Índice de Katz</h2>
+  <div class="fila">
+    <div class="campo"><div class="etiqueta">Dependencias</div><div class="puntaje">${puntajeKatz} / 6</div></div>
+    <div class="campo"><div class="etiqueta">Interpretación</div><div class="valor">${interKatz}</div></div>
+  </div>
+
+  <br/>
+  <button onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+
+</body>
+</html>`;
 }

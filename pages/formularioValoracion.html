@@ -25,7 +25,7 @@
 <body>
 
 <!-- ==================================================
-     PANTALLA 4: FORMULARIO DE VALORACIÓN
+     FORMULARIO DE VALORACIÓN
 ================================================== -->
 <div id="formulario" class="pantalla activa">
 
@@ -86,27 +86,27 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>Lugar de nacimiento</label>
-            <input type="text" placeholder="Ciudad, Estado"/>
+            <input type="text" placeholder="Ciudad, Estado" id="lugarNacimiento"/>
           </div>
 
           <div class="campo">
             <label>Domicilio</label>
-            <input type="text" placeholder="Calle + Número, Colonia, Código Postal, Ciudad, Estado"/>
+            <input type="text" placeholder="Calle + Número, Colonia, Código Postal, Ciudad, Estado" id="domicilio"/>
           </div>
           <div class="campo">
-            <label>Fecha de ingreso</label>
-            <input type="date"/>
+            <label >Fecha de ingreso</label>
+            <input type="date" id="fechaIngreso"/>
           </div>
         </div>
 
         <div class="campo-grupo col-3">
           <div class="campo">
             <label>Religión</label>
-            <input type="text" placeholder="Ej. Católica"/>
+            <input type="text" placeholder="Ej. Católica" id="religion"/>
           </div>
           <div class="campo">
             <label>Escolaridad</label>
-            <select>
+            <select id="escolaridad">
               <option value="">-- Seleccionar --</option>
               <option>Sin escolaridad</option>
               <option>Primaria</option>
@@ -117,7 +117,7 @@
           </div>
           <div class="campo">
             <label>Estado civil</label>
-            <select>
+            <select id="estadoCivil">
               <option value="">-- Seleccionar --</option>
               <option>Soltero/a</option>
               <option>Casado/a</option>
@@ -131,11 +131,11 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>Ocupación</label>
-            <input type="text" placeholder="Ej. Jubilado/a"/>
+            <input type="text" placeholder="Ej. Jubilado/a" id="ocupacion"/>
           </div>
           <div class="campo">
             <label>Dependencia / Institución</label>
-            <select>
+            <select id="dependencia">
               <option value="">-- Seleccionar --</option>
               <option>DIF Aguascalientes</option>
               <option>IMSS UMF No. 1</option>
@@ -150,19 +150,19 @@
         <div class="campo-casillas" style="margin-top:8px;">
           <label>¿Con qué servicios de salud cuenta?</label>
           <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> IMSS</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> ISSSTE</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> ISEA</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Particular</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Seguro Popular</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Otro</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"  name="serviciosSalud" value="IMSS"/> IMSS</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"  name="serviciosSalud" value="ISSSTE"/> ISSSTE</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"  name="serviciosSalud" value="ISEA"/> ISEA</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"  name="serviciosSalud" value="Particular"/> Particular</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"  name="serviciosSalud" value="Seguro Popular"/> Seguro Popular</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"  name="serviciosSalud" value="Otro"/> Otro</label>
           </div>
         </div>
 
         <div class="campo-grupo" style="margin-top:16px;">
           <div class="campo">
             <label>¿Cuándo acude al servicio médico?</label>
-            <select>
+            <select id="cuandoAcude">
               <option value="">-- Seleccionar --</option>
               <option>Por control</option>
               <option>Por malestar</option>
@@ -171,7 +171,7 @@
           </div>
           <div class="campo">
             <label>¿Es capaz de tomar decisiones respecto a su tratamiento?</label>
-            <select>
+            <select id="capazDecisiones">
               <option value="">-- Seleccionar --</option>
               <option>Sí</option>
               <option>No</option>
@@ -182,11 +182,11 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>Responsable del paciente</label>
-            <input type="text" placeholder="Nombre y parentesco"/>
+            <input type="text" placeholder="Nombre y parentesco" id="responsable"/>
           </div>
           <div class="campo">
             <label>¿Lleva a cabo su tratamiento?</label>
-            <select>
+            <select id="llevaTratamiento">
               <option value="">-- Seleccionar --</option>
               <option>Sí</option>
               <option>No</option>
@@ -343,7 +343,7 @@
         <div class="campo-grupo" style="margin-top:16px;">
           <div class="campo">
             <label>Relación familiar</label>
-            <select>
+            <select id="relacionFamiliar">
               <option value="">-- Seleccionar --</option>
               <option>Buena</option>
               <option>Regular</option>
@@ -352,7 +352,7 @@
           </div>
           <div class="campo">
             <label>Ingreso económico familiar</label>
-            <select>
+            <select id="ingresoEconomico">
               <option value="">-- Seleccionar --</option>
               <option>Menos de 1 s.m.</option>
               <option>1–2 s.m.</option>
@@ -362,7 +362,7 @@
           </div>
           <div class="campo">
             <label>Dependencia económica</label>
-            <select>
+            <select id="dependenciaEconomica">
               <option value="">-- Seleccionar --</option>
               <option>Personal</option>
               <option>Esposo/a</option>
@@ -388,7 +388,7 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>Cabello</label>
-            <select>
+            <select id="cabello">
               <option value="">-- Seleccionar --</option>
               <option>Quebradizo</option>
               <option>Opaco</option>
@@ -399,7 +399,7 @@
           </div>
           <div class="campo">
             <label>Mucosas</label>
-            <select>
+            <select id="mucosas">
               <option value="">-- Seleccionar --</option>
               <option>Sangrado</option>
               <option>Infección</option>
@@ -409,7 +409,7 @@
           </div>
           <div class="campo">
             <label>Piel</label>
-            <select>
+            <select id="piel">
               <option value="">-- Seleccionar --</option>
               <option>Piel de gallina</option>
               <option>Seca y quebrada</option>
@@ -483,7 +483,7 @@
           </div>
           <div class="campo">
             <label>Estado general</label>
-            <select>
+            <select id="estadoGeneral">
               <option value="">-- Seleccionar --</option>
               <option>Debilidad</option>
               <option>Fatiga</option>
@@ -528,7 +528,7 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>¿Cómo es su dentadura?</label>
-            <select>
+            <select id="dentadura">
               <option value="">-- Seleccionar --</option>
               <option>Dientes completos</option>
               <option>Faltan dientes</option>
@@ -662,11 +662,11 @@
         <div class="campo-grupo" style="margin-top:16px;">
           <div class="campo">
             <label>¿Tiene presencia de alguna enfermedad?</label>
-            <input type="text" placeholder="Especifique..."/>
+            <input type="text" placeholder="Especifique..." id="enfermedadPresente"/>
           </div>
           <div class="campo">
             <label>¿Tiene tratamiento?</label>
-            <input type="text" placeholder="Especifique..."/>
+            <input type="text" placeholder="Especifique..." id="tieneTratamiento"/>
           </div>
         </div>
 

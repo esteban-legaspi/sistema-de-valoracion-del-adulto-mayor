@@ -1711,12 +1711,54 @@
           Basado en Folstein et al. (1975).
         </p>
 
-        <!-- Orientación temporal -->
-        <p style="font-size:0.85rem; font-weight:700; color:#555; margin-bottom:10px;">Orientación temporal (máx. 5 pts)</p>
-
         <div id="preguntas-mmse">
-          <!-- Las preguntas se generan con JS -->
-        </div>
+
+  <p class="mmse-subtitulo">Orientación temporal (máx. 5 pts)</p>
+  <div class="escala-pregunta"><span>1. ¿En qué año estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse0" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse0" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>2. ¿En qué estación del año estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse1" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse1" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>3. ¿En qué día (fecha) estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse2" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse2" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>4. ¿En qué mes estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse3" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse3" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>5. ¿En qué día de la semana estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse4" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse4" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+
+  <p class="mmse-subtitulo">Orientación espacial (máx. 5 pts)</p>
+  <div class="escala-pregunta"><span>6. ¿En qué hospital o lugar estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse5" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse5" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>7. ¿En qué piso o planta estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse6" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse6" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>8. ¿En qué ciudad estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse7" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse7" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>9. ¿En qué provincia o estado estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse8" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse8" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>10. ¿En qué país estamos?</span><div class="resp-sinno"><label><input type="radio" name="mmse9" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse9" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+
+  <p class="mmse-subtitulo">Fijación / Recuerdo inmediato (máx. 3 pts)</p>
+  <p style="font-size:0.78rem;color:#999;margin-bottom:8px;">Diga las palabras: <strong>Peseta – Caballo – Manzana</strong>. El paciente debe repetirlas. Puntúe la primera repetición.</p>
+  <div class="escala-pregunta"><span>11. Repite "Peseta"</span><div class="resp-sinno"><label><input type="radio" name="mmse10" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse10" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>12. Repite "Caballo"</span><div class="resp-sinno"><label><input type="radio" name="mmse11" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse11" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>13. Repite "Manzana"</span><div class="resp-sinno"><label><input type="radio" name="mmse12" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse12" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+
+  <p class="mmse-subtitulo">Atención y cálculo (máx. 5 pts)</p>
+  <p style="font-size:0.78rem;color:#999;margin-bottom:8px;">Pida al paciente que reste de 3 en 3 desde 30. Detenga tras 5 sustracciones. Alternativa: deletrear MUNDO al revés.</p>
+  <div class="escala-pregunta"><span>14. 30 − 3 = 27</span><div class="resp-sinno"><label><input type="radio" name="mmse13" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse13" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>15. 27 − 3 = 24</span><div class="resp-sinno"><label><input type="radio" name="mmse14" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse14" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>16. 24 − 3 = 21</span><div class="resp-sinno"><label><input type="radio" name="mmse15" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse15" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>17. 21 − 3 = 18</span><div class="resp-sinno"><label><input type="radio" name="mmse16" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse16" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>18. 18 − 3 = 15</span><div class="resp-sinno"><label><input type="radio" name="mmse17" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse17" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+
+  <p class="mmse-subtitulo">Recuerdo diferido (máx. 3 pts)</p>
+  <p style="font-size:0.78rem;color:#999;margin-bottom:8px;">Pida al paciente que recuerde las tres palabras de antes.</p>
+  <div class="escala-pregunta"><span>19. Recuerda "Peseta"</span><div class="resp-sinno"><label><input type="radio" name="mmse18" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse18" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>20. Recuerda "Caballo"</span><div class="resp-sinno"><label><input type="radio" name="mmse19" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse19" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>21. Recuerda "Manzana"</span><div class="resp-sinno"><label><input type="radio" name="mmse20" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse20" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+
+  <p class="mmse-subtitulo">Lenguaje (máx. 9 pts)</p>
+  <div class="escala-pregunta"><span>22. Denominación: ¿Qué es esto? — lápiz</span><div class="resp-sinno"><label><input type="radio" name="mmse21" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse21" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>23. Denominación: ¿Qué es esto? — reloj</span><div class="resp-sinno"><label><input type="radio" name="mmse22" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse22" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>24. Repetición: "Ni sí, ni no, ni pero"</span><div class="resp-sinno"><label><input type="radio" name="mmse23" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse23" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>25. Órdenes: coge el papel con la mano derecha</span><div class="resp-sinno"><label><input type="radio" name="mmse24" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse24" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>26. Órdenes: dóblalo por la mitad</span><div class="resp-sinno"><label><input type="radio" name="mmse25" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse25" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>27. Órdenes: ponlo en el suelo</span><div class="resp-sinno"><label><input type="radio" name="mmse26" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse26" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>28. Lectura: lee y ejecuta "Cierre los ojos"</span><div class="resp-sinno"><label><input type="radio" name="mmse27" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse27" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>29. Escritura: escribe una frase con sujeto y predicado</span><div class="resp-sinno"><label><input type="radio" name="mmse28" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse28" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+  <div class="escala-pregunta"><span>30. Copia: copia los dos pentágonos intersectados</span><div class="resp-sinno"><label><input type="radio" name="mmse29" value="1" onchange="calcularMmse()"/> Correcto</label><label><input type="radio" name="mmse29" value="0" onchange="calcularMmse()"/> Incorrecto</label></div></div>
+
+</div>
 
         <div class="puntaje-caja" id="puntaje-mmse-caja">
           <div>

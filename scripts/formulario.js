@@ -31,16 +31,19 @@ function generarPreguntasMmse() {
 
 function calcularMmse() {
   var total = 0;
-  for (var i = 0; i < preguntasMmse.length; i++) {
+  for (var i = 0; i < 30; i++) {
     var sel = document.querySelector('input[name="mmse' + i + '"]:checked');
     if (sel) total += parseInt(sel.value);
   }
   document.getElementById('puntaje-mmse').textContent = total;
-  var inter = total >= 27 ? 'Normal' : total >= 24 ? 'Sospecha patológica' : total >= 12 ? 'Deterioro' : 'Demencia';
-  var col   = total >= 27 ? 'var(--verde-ok)' : total >= 24 ? 'var(--dorado-uaa)' : 'var(--rojo-error)';
+  var inter, col;
+  if      (total >= 27) { inter = 'Normal';               col = 'var(--verde-ok)';   }
+  else if (total >= 24) { inter = 'Sospecha patológica';   col = 'var(--dorado-uaa)'; }
+  else if (total >= 12) { inter = 'Deterioro cognitivo';   col = 'var(--rojo-error)'; }
+  else                  { inter = 'Demencia';              col = 'var(--rojo-error)'; }
   var el = document.getElementById('inter-mmse');
   el.textContent = inter;
-  el.style.color = col;
+  el.style.color  = col;
 }
 
 // =============================================

@@ -489,6 +489,13 @@
       flex-shrink: 0;
     }
 
+    .mmse-subtitulo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #555;
+  margin: 16px 0 8px;
+}
+
     /* Grupos de campos */
     .campo-grupo {
       display: grid;

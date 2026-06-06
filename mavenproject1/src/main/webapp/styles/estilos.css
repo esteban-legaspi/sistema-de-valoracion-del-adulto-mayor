@@ -685,6 +685,13 @@
       color: #888;
       font-family: 'Montserrat', sans-serif;
     }
+    
+    .error-msg {
+    color: #c0392b;
+    font-size: 0.85rem;
+    min-height: 1.2em;
+    margin: 4px 0;
+}
 
     /* =============================================
        FOOTER

@@ -43,8 +43,8 @@ public class Loginservlet extends HttpServlet {
                 String ruta;
                 switch (u.getRol()) {
                     case "admin":      ruta = "pages/admin/usuarios.html"; break;
-                    case "maestro":    ruta = "pages/dashboard.html";      break;
-                    case "estudiante": ruta = "pages/avisoConfidencialidad.html"; break;
+                    case "maestro":    ruta = "pages/dashboard-maestro.html";    break;
+                    case "estudiante": ruta = "pages/dashboard-estudiante.html"; break;
                     default:           ruta = "index.html";
                 }
                 json.put("redirect", ruta);

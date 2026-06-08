@@ -3,173 +3,82 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.mavenproject1;
-
+ 
 public class PacienteDatos {
-
-    private int id;
-    private int valoracionId;
-
+ 
+    private int    id;
+    private int    valoracionId;
     private String nombre;
-    private int edad;
+    private Integer edad;
     private String genero;
     private String lugarNacimiento;
     private String domicilio;
-    private String fechaIngreso;
+    private String fechaIngreso;      // String "YYYY-MM-DD" viene del form
     private String religion;
     private String escolaridad;
     private String estadoCivil;
     private String ocupacion;
     private String dependenciaInstitucion;
-    private String serviciosSalud;
+    private String serviciosSalud;    // JSON array como String
     private String cuandoAcudeMedico;
-    private boolean capazDecisiones;
+    private Boolean capazDecisiones;
     private String responsable;
-    private boolean llevaTratamiento;
-
-    public PacienteDatos() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getValoracionId() {
-        return valoracionId;
-    }
-
-    public void setValoracionId(int valoracionId) {
-        this.valoracionId = valoracionId;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public String getLugarNacimiento() {
-        return lugarNacimiento;
-    }
-
-    public void setLugarNacimiento(String lugarNacimiento) {
-        this.lugarNacimiento = lugarNacimiento;
-    }
-
-    public String getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public String getFechaIngreso() {
-        return fechaIngreso;
-    }
-
-    public void setFechaIngreso(String fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-
-    public String getReligion() {
-        return religion;
-    }
-
-    public void setReligion(String religion) {
-        this.religion = religion;
-    }
-
-    public String getEscolaridad() {
-        return escolaridad;
-    }
-
-    public void setEscolaridad(String escolaridad) {
-        this.escolaridad = escolaridad;
-    }
-
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
-
-    public String getOcupacion() {
-        return ocupacion;
-    }
-
-    public void setOcupacion(String ocupacion) {
-        this.ocupacion = ocupacion;
-    }
-
-    public String getDependenciaInstitucion() {
-        return dependenciaInstitucion;
-    }
-
-    public void setDependenciaInstitucion(String dependenciaInstitucion) {
-        this.dependenciaInstitucion = dependenciaInstitucion;
-    }
-
-    public String getServiciosSalud() {
-        return serviciosSalud;
-    }
-
-    public void setServiciosSalud(String serviciosSalud) {
-        this.serviciosSalud = serviciosSalud;
-    }
-
-    public String getCuandoAcudeMedico() {
-        return cuandoAcudeMedico;
-    }
-
-    public void setCuandoAcudeMedico(String cuandoAcudeMedico) {
-        this.cuandoAcudeMedico = cuandoAcudeMedico;
-    }
-
-    public boolean isCapazDecisiones() {
-        return capazDecisiones;
-    }
-
-    public void setCapazDecisiones(boolean capazDecisiones) {
-        this.capazDecisiones = capazDecisiones;
-    }
-
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
-    }
-
-    public boolean isLlevaTratamiento() {
-        return llevaTratamiento;
-    }
-
-    public void setLlevaTratamiento(boolean llevaTratamiento) {
-        this.llevaTratamiento = llevaTratamiento;
-    }
+    private Boolean llevaTratamiento;
+ 
+    public PacienteDatos() {}
+ 
+    // ── Getters y setters ──────────────────────────────
+    public int getId()                        { return id; }
+    public void setId(int id)                 { this.id = id; }
+ 
+    public int getValoracionId()              { return valoracionId; }
+    public void setValoracionId(int v)        { this.valoracionId = v; }
+ 
+    public String getNombre()                 { return nombre; }
+    public void setNombre(String n)           { this.nombre = n; }
+ 
+    public Integer getEdad()                  { return edad; }
+    public void setEdad(Integer e)            { this.edad = e; }
+ 
+    public String getGenero()                 { return genero; }
+    public void setGenero(String g)           { this.genero = g; }
+ 
+    public String getLugarNacimiento()        { return lugarNacimiento; }
+    public void setLugarNacimiento(String l)  { this.lugarNacimiento = l; }
+ 
+    public String getDomicilio()              { return domicilio; }
+    public void setDomicilio(String d)        { this.domicilio = d; }
+ 
+    public String getFechaIngreso()           { return fechaIngreso; }
+    public void setFechaIngreso(String f)     { this.fechaIngreso = f; }
+ 
+    public String getReligion()               { return religion; }
+    public void setReligion(String r)         { this.religion = r; }
+ 
+    public String getEscolaridad()            { return escolaridad; }
+    public void setEscolaridad(String e)      { this.escolaridad = e; }
+ 
+    public String getEstadoCivil()            { return estadoCivil; }
+    public void setEstadoCivil(String e)      { this.estadoCivil = e; }
+ 
+    public String getOcupacion()              { return ocupacion; }
+    public void setOcupacion(String o)        { this.ocupacion = o; }
+ 
+    public String getDependenciaInstitucion() { return dependenciaInstitucion; }
+    public void setDependenciaInstitucion(String d) { this.dependenciaInstitucion = d; }
+ 
+    public String getServiciosSalud()         { return serviciosSalud; }
+    public void setServiciosSalud(String s)   { this.serviciosSalud = s; }
+ 
+    public String getCuandoAcudeMedico()      { return cuandoAcudeMedico; }
+    public void setCuandoAcudeMedico(String c){ this.cuandoAcudeMedico = c; }
+ 
+    public Boolean getCapazDecisiones()       { return capazDecisiones; }
+    public void setCapazDecisiones(Boolean c) { this.capazDecisiones = c; }
+ 
+    public String getResponsable()            { return responsable; }
+    public void setResponsable(String r)      { this.responsable = r; }
+ 
+    public Boolean getLlevaTratamiento()      { return llevaTratamiento; }
+    public void setLlevaTratamiento(Boolean l){ this.llevaTratamiento = l; }
 }

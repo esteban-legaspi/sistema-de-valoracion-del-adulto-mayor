@@ -28,8 +28,64 @@ function recolectarSeccion0() {
   };
 }
 
-// Placeholder para secciones 2-7 — se llenarán en pasos siguientes
-function recolectarSeccion1() { return { seccion: 1 }; }
+function recolectarSeccion1() {
+  return {
+    tipoPiso:           chks('tipoPiso'),
+    tipoPared:          chks('tipoPared'),
+    tipoTecho:          chks('tipoTecho'),
+    tipoLuz:            chks('tipoLuz'),
+    abastecimientoAgua: chks('abastecimientoAgua'),
+    purificacionAgua:   chks('purificacionAgua'),
+    drenaje:            chks('drenaje'),
+    tratamientoBasura:  chks('tratamientoBasura'),
+    faunaNociva:        chks('faunaNociva'),
+    animalesDomesticos: chks('animalesDomesticos'),
+
+    numAnimales:        val('numAnimales'),
+    animalesVacunados:  val('animalesVacunados'), 
+    relacionFamiliar: val('relacionFamiliar'),
+        ingresoEconomico: val('ingresoEconomico'),
+        dependenciaEconomica: val('dependenciaEconomica'),
+
+        estadoNutricional: radio('nutricional'),
+
+        cabello: val('cabello'),
+        mucosas: val('mucosas'),
+        piel: val('piel'),
+        labios: val('labios'),
+        encias: val('encias'),
+        narizOrejas: val('narizOrejas'),
+        unas: val('unas'),
+        sistemaOseo: val('sistemaOseo'),
+        estadoGeneral: val('estadoGeneral'),
+
+        kgSubidos: val('kgSubidos'),
+        kgPerdidos: val('kgPerdidos'),
+
+        dentadura: val('dentadura'),
+        guisaAlimentos: val('guisaAlimentos'),
+
+        problemaCavidadOral: val('problemaCavidad'),
+        problemaDentalComer: val('problemaDental'),
+        problemaDigestion: val('problemaDigestion'),
+
+        alimentosPuedeComer: val('alimentosPuedeComer'),
+
+        desayuno: chks('desayuno'),
+        comida: chks('comida'),
+        cena: chks('cena'),
+
+        cepilladoDientes: val('cepillado'),
+        bano: val('bano'),
+        cambioRopa: val('cambioRopa'),
+
+        lavadoManos: chks('lavadoManos'),
+
+        enfermedadPresente: val('enfermedadPresente'),
+        tieneTratamiento: val('tieneTratamiento')
+  };
+}
+
 function recolectarSeccion2() { return { seccion: 2 }; }
 function recolectarSeccion3() { return { seccion: 3 }; }
 function recolectarSeccion4() { return { seccion: 4 }; }

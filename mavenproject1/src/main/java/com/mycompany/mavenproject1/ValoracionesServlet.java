@@ -87,6 +87,81 @@ public class ValoracionesServlet extends HttpServlet {
                 for (String s : servicios) arr.put(s);
             }
             p.setServiciosSalud(arr.toString());
+            
+            // 4. Armar Entorno desde los parámetros del formulario
+
+entorno e = new entorno();
+e.setValoracionId(valoracionId);
+
+// Campos JSON
+e.setTipoPiso(
+    new JSONArray(req.getParameterValues("tipoPiso") != null ?
+        req.getParameterValues("tipoPiso") : new String[0]
+    ).toString()
+);
+
+e.setTipoPared(
+    new JSONArray(req.getParameterValues("tipoPared") != null ?
+        req.getParameterValues("tipoPared") : new String[0]
+    ).toString()
+);
+
+e.setTipoTecho(
+    new JSONArray(req.getParameterValues("tipoTecho") != null ?
+        req.getParameterValues("tipoTecho") : new String[0]
+    ).toString()
+);
+
+e.setTipoLuz(
+    new JSONArray(req.getParameterValues("tipoLuz") != null ?
+        req.getParameterValues("tipoLuz") : new String[0]
+    ).toString()
+);
+
+e.setAbastecimientoAgua(
+    new JSONArray(req.getParameterValues("abastecimientoAgua") != null ?
+        req.getParameterValues("abastecimientoAgua") : new String[0]
+    ).toString()
+);
+
+e.setPurificacionAgua(
+    new JSONArray(req.getParameterValues("purificacionAgua") != null ?
+        req.getParameterValues("purificacionAgua") : new String[0]
+    ).toString()
+);
+
+e.setDrenaje(
+    new JSONArray(req.getParameterValues("drenaje") != null ?
+        req.getParameterValues("drenaje") : new String[0]
+    ).toString()
+);
+
+e.setTratamientoBasura(
+    new JSONArray(req.getParameterValues("tratamientoBasura") != null ?
+        req.getParameterValues("tratamientoBasura") : new String[0]
+    ).toString()
+);
+
+e.setFaunaNociva(
+    new JSONArray(req.getParameterValues("faunaNociva") != null ?
+        req.getParameterValues("faunaNociva") : new String[0]
+    ).toString()
+);
+
+e.setAnimalesDomesticos(
+    new JSONArray(req.getParameterValues("animalesDomesticos") != null ?
+        req.getParameterValues("animalesDomesticos") : new String[0]
+    ).toString()
+);
+
+// ENUMS
+
+e.setNumAnimales(req.getParameter("numAnimales"));
+e.setAnimalesVacunados(req.getParameter("animalesVacunados"));
+
+// 5. Guardar entorno
+
+dao.insertarEntorno(e);
 
             // 4. Guardar paciente_datos
             dao.insertarPacienteDatos(p);

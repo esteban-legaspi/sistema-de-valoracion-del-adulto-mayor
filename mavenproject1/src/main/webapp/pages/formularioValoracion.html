@@ -207,135 +207,144 @@
 
         <div class="campo-casillas">
           <label>Tipo de piso del hogar</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Mosaico</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Cemento</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Tierra</label>
+          <div class="casillas-grid" id="entorno-tipo-piso">
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)" name="tipoPiso" value="Mosaico"/> Mosaico</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)" name="tipoPiso" value="Cemento"/> Cemento</label>
+            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)" name="tipoPiso" value="Tierra"/> Tierra</label>
           </div>
         </div>
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>Tipo de pared</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Bloque</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Ladrillo</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Adobe</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Lámina</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Madera</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Más de una</label>
-          </div>
+          <div class="casillas-grid" id="entorno-tipo-pared">
+  <label class="casilla-item"><input type="checkbox" name="tipoPared" value="Bloque" onchange="toggleMarcada(this)"/> Bloque</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoPared" value="Ladrillo" onchange="toggleMarcada(this)"/> Ladrillo</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoPared" value="Adobe" onchange="toggleMarcada(this)"/> Adobe</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoPared" value="Lámina" onchange="toggleMarcada(this)"/> Lámina</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoPared" value="Madera" onchange="toggleMarcada(this)"/> Madera</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoPared" value="Más de una" onchange="toggleMarcada(this)"/> Más de una</label>
+</div>
         </div>
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>Tipo de techo</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Concreto</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Lámina</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Teja</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Cartón</label>
-          </div>
+          <div class="casillas-grid" id="entorno-tipo-techo">
+  <label class="casilla-item"><input type="checkbox" name="tipoTecho" value="Concreto" onchange="toggleMarcada(this)"/> Concreto</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoTecho" value="Lámina" onchange="toggleMarcada(this)"/> Lámina</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoTecho" value="Teja" onchange="toggleMarcada(this)"/> Teja</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoTecho" value="Cartón" onchange="toggleMarcada(this)"/> Cartón</label>
+</div>
         </div>
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>Tipo de luz</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Eléctrica</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Combustión (velas)</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Otro</label>
-          </div>
+          <div class="casillas-grid" id="entorno-tipo-luz">
+  <label class="casilla-item"><input type="checkbox" name="tipoLuz" value="Eléctrica" onchange="toggleMarcada(this)"/> Eléctrica</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoLuz" value="Combustión (velas)" onchange="toggleMarcada(this)"/> Combustión (velas)</label>
+  <label class="casilla-item"><input type="checkbox" name="tipoLuz" value="Otro" onchange="toggleMarcada(this)"/> Otro</label>
+</div>
         </div>
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>Abastecimiento de agua</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Llave</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Pozo</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Pipa</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Otro</label>
-          </div>
+          <div class="casillas-grid" id="entorno-abastecimiento">
+  <label class="casilla-item"><input type="checkbox" name="abastecimientoAgua" value="Llave" onchange="toggleMarcada(this)"/> Llave</label>
+  <label class="casilla-item"><input type="checkbox" name="abastecimientoAgua" value="Pozo" onchange="toggleMarcada(this)"/> Pozo</label>
+  <label class="casilla-item"><input type="checkbox" name="abastecimientoAgua" value="Pipa" onchange="toggleMarcada(this)"/> Pipa</label>
+  <label class="casilla-item"><input type="checkbox" name="abastecimientoAgua" value="Otro" onchange="toggleMarcada(this)"/> Otro</label>
+</div>
         </div>
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>Métodos de purificación de agua de consumo</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Garrafón</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Hervida</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Clorada</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Ninguno</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Más de uno</label>
-          </div>
+          <div class="casillas-grid" id="entorno-purificacion">
+  <label class="casilla-item"><input type="checkbox" name="purificacionAgua" value="Garrafón" onchange="toggleMarcada(this)"/> Garrafón</label>
+  <label class="casilla-item"><input type="checkbox" name="purificacionAgua" value="Hervida" onchange="toggleMarcada(this)"/> Hervida</label>
+  <label class="casilla-item"><input type="checkbox" name="purificacionAgua" value="Clorada" onchange="toggleMarcada(this)"/> Clorada</label>
+  <label class="casilla-item"><input type="checkbox" name="purificacionAgua" value="Ninguno" onchange="toggleMarcada(this)"/> Ninguno</label>
+  <label class="casilla-item"><input type="checkbox" name="purificacionAgua" value="Más de uno" onchange="toggleMarcada(this)"/> Más de uno</label>
+</div>
         </div>
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>Drenaje y alcantarillado</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Drenaje</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Letrina</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Fosa</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Al ras del suelo</label>
-          </div>
+          <div class="casillas-grid" id="entorno-drenaje">
+  <label class="casilla-item"><input type="checkbox" name="drenaje" value="Drenaje" onchange="toggleMarcada(this)"/> Drenaje</label>
+  <label class="casilla-item"><input type="checkbox" name="drenaje" value="Letrina" onchange="toggleMarcada(this)"/> Letrina</label>
+  <label class="casilla-item"><input type="checkbox" name="drenaje" value="Fosa" onchange="toggleMarcada(this)"/> Fosa</label>
+  <label class="casilla-item"><input type="checkbox" name="drenaje" value="Al ras del suelo" onchange="toggleMarcada(this)"/> Al ras del suelo</label>
+</div>
         </div>
 
-        <div class="campo-casillas" style="margin-top:12px;">
-          <label>Tratamiento de la basura</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Camión recolector</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Quemar</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Enterrar</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Más de uno</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Ninguno</label>
-          </div>
-        </div>
+        <!-- Tratamiento de la basura -->
 
-        <div class="campo-casillas" style="margin-top:12px;">
-          <label>Fauna nociva presente</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Ratones</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Moscas</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Mosquitos</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Arañas</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Cucarachas</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Pulgas</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Más de uno</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Ninguno</label>
-          </div>
-        </div>
+<div class="campo-casillas" style="margin-top:12px;">
+  <label>Tratamiento de la basura</label>
+  <div class="casillas-grid" id="entorno-basura">
+    <label class="casilla-item"><input type="checkbox" name="tratamientoBasura" value="Camión recolector" onchange="toggleMarcada(this)"/> Camión recolector</label>
+    <label class="casilla-item"><input type="checkbox" name="tratamientoBasura" value="Quemar" onchange="toggleMarcada(this)"/> Quemar</label>
+    <label class="casilla-item"><input type="checkbox" name="tratamientoBasura" value="Enterrar" onchange="toggleMarcada(this)"/> Enterrar</label>
+    <label class="casilla-item"><input type="checkbox" name="tratamientoBasura" value="Más de uno" onchange="toggleMarcada(this)"/> Más de uno</label>
+    <label class="casilla-item"><input type="checkbox" name="tratamientoBasura" value="Ninguno" onchange="toggleMarcada(this)"/> Ninguno</label>
+  </div>
+</div>
 
-        <div class="campo-casillas" style="margin-top:12px;">
-          <label>Animales domésticos</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Perros</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Gatos</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Aves</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Cerdos</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Más de uno</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Otro</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Ninguno</label>
-          </div>
-        </div>
+<!-- Fauna nociva presente -->
 
-        <div class="campo-grupo" style="margin-top:12px;">
-          <div class="campo">
-            <label>No. de animales domésticos</label>
-            <select>
-              <option value="">-- Seleccionar --</option>
-              <option>1 a 2</option>
-              <option>3 a 5</option>
-              <option>Más de 5</option>
-              <option>No aplica</option>
-            </select>
-          </div>
-          <div class="campo">
-            <label>Animales domésticos vacunados</label>
-            <select>
-              <option value="">-- Seleccionar --</option>
-              <option>Perros</option>
-              <option>Gatos</option>
-              <option>Ambos</option>
-              <option>Ninguno</option>
-            </select>
-          </div>
-        </div>
+<div class="campo-casillas" style="margin-top:12px;">
+  <label>Fauna nociva presente</label>
+  <div class="casillas-grid" id="entorno-fauna">
+    <label class="casilla-item"><input type="checkbox" name="faunaNociva" value="Ratones" onchange="toggleMarcada(this)"/> Ratones</label>
+    <label class="casilla-item"><input type="checkbox" name="faunaNociva" value="Moscas" onchange="toggleMarcada(this)"/> Moscas</label>
+    <label class="casilla-item"><input type="checkbox" name="faunaNociva" value="Mosquitos" onchange="toggleMarcada(this)"/> Mosquitos</label>
+    <label class="casilla-item"><input type="checkbox" name="faunaNociva" value="Arañas" onchange="toggleMarcada(this)"/> Arañas</label>
+    <label class="casilla-item"><input type="checkbox" name="faunaNociva" value="Cucarachas" onchange="toggleMarcada(this)"/> Cucarachas</label>
+    <label class="casilla-item"><input type="checkbox" name="faunaNociva" value="Pulgas" onchange="toggleMarcada(this)"/> Pulgas</label>
+    <label class="casilla-item"><input type="checkbox" name="faunaNociva" value="Más de uno" onchange="toggleMarcada(this)"/> Más de uno</label>
+    <label class="casilla-item"><input type="checkbox" name="faunaNociva" value="Ninguno" onchange="toggleMarcada(this)"/> Ninguno</label>
+  </div>
+</div>
+
+<!-- Animales domésticos -->
+
+<div class="campo-casillas" style="margin-top:12px;">
+  <label>Animales domésticos</label>
+  <div class="casillas-grid" id="entorno-animales">
+    <label class="casilla-item"><input type="checkbox" name="animalesDomesticos" value="Perros" onchange="toggleMarcada(this)"/> Perros</label>
+    <label class="casilla-item"><input type="checkbox" name="animalesDomesticos" value="Gatos" onchange="toggleMarcada(this)"/> Gatos</label>
+    <label class="casilla-item"><input type="checkbox" name="animalesDomesticos" value="Aves" onchange="toggleMarcada(this)"/> Aves</label>
+    <label class="casilla-item"><input type="checkbox" name="animalesDomesticos" value="Cerdos" onchange="toggleMarcada(this)"/> Cerdos</label>
+    <label class="casilla-item"><input type="checkbox" name="animalesDomesticos" value="Más de uno" onchange="toggleMarcada(this)"/> Más de uno</label>
+    <label class="casilla-item"><input type="checkbox" name="animalesDomesticos" value="Otro" onchange="toggleMarcada(this)"/> Otro</label>
+    <label class="casilla-item"><input type="checkbox" name="animalesDomesticos" value="Ninguno" onchange="toggleMarcada(this)"/> Ninguno</label>
+  </div>
+</div>
+
+<!-- Selects -->
+
+<div class="campo-grupo" style="margin-top:12px;">
+  <div class="campo">
+    <label>No. de animales domésticos</label>
+    <select id="numAnimales" name="numAnimales">
+      <option value="">-- Seleccionar --</option>
+      <option value="1 a 2">1 a 2</option>
+      <option value="3 a 5">3 a 5</option>
+      <option value="Más de 5">Más de 5</option>
+      <option value="No aplica">No aplica</option>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label>Animales domésticos vacunados</label>
+    <select id="animalesVacunados" name="animalesVacunados">
+      <option value="">-- Seleccionar --</option>
+      <option value="Perros">Perros</option>
+      <option value="Gatos">Gatos</option>
+      <option value="Ambos">Ambos</option>
+      <option value="Ninguno">Ninguno</option>
+    </select>
+  </div>
+</div>
 
         <hr style="margin:20px 0; border-color:#EEE;"/>
         <p style="font-size:0.85rem; font-weight:700; color:#555; margin-bottom:10px;">B) Patrón de vida</p>
@@ -375,11 +384,11 @@
         <div class="campo-casillas" style="margin-top:12px;">
           <label>Estado nutricional</label>
           <div class="casillas-grid">
-            <label class="casilla-item"><input type="radio" name="nutricional" onchange="toggleMarcada(this)"/> Desnutrición</label>
-            <label class="casilla-item"><input type="radio" name="nutricional" onchange="toggleMarcada(this)"/> Normal</label>
-            <label class="casilla-item"><input type="radio" name="nutricional" onchange="toggleMarcada(this)"/> Sobrepeso</label>
-            <label class="casilla-item"><input type="radio" name="nutricional" onchange="toggleMarcada(this)"/> Obesidad</label>
-          </div>
+  <label class="casilla-item"><input type="radio" name="nutricional" value="Desnutrición" onchange="toggleMarcada(this)"/> Desnutrición</label>
+  <label class="casilla-item"><input type="radio" name="nutricional" value="Normal" onchange="toggleMarcada(this)"/> Normal</label>
+  <label class="casilla-item"><input type="radio" name="nutricional" value="Sobrepeso" onchange="toggleMarcada(this)"/> Sobrepeso</label>
+  <label class="casilla-item"><input type="radio" name="nutricional" value="Obesidad" onchange="toggleMarcada(this)"/> Obesidad</label>
+</div>
         </div>
 
         <hr style="margin:16px 0; border-color:#EEE;"/>
@@ -426,7 +435,7 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>Labios</label>
-            <select>
+            <select id="labios">
               <option value="">-- Seleccionar --</option>
               <option>Con lesiones</option>
               <option>Secos</option>
@@ -437,7 +446,7 @@
           </div>
           <div class="campo">
             <label>Encías</label>
-            <select>
+            <select id="encias">
               <option value="">-- Seleccionar --</option>
               <option>Hinchadas</option>
               <option>Sangran fácilmente</option>
@@ -447,7 +456,7 @@
           </div>
           <div class="campo">
             <label>Nariz y orejas</label>
-            <select>
+            <select id="narizOrejas">
               <option value="">-- Seleccionar --</option>
               <option>Con lesión seborreica</option>
               <option>Húmedas</option>
@@ -461,7 +470,7 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>Uñas</label>
-            <select>
+            <select id="unas">
               <option value="">-- Seleccionar --</option>
               <option>Pálidas</option>
               <option>Quebradas</option>
@@ -472,7 +481,7 @@
           </div>
           <div class="campo">
             <label>Sistema óseo</label>
-            <select>
+            <select id="sistemaOseo">
               <option value="">-- Seleccionar --</option>
               <option>Encorvado</option>
               <option>Reducción de talla</option>
@@ -501,7 +510,7 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>¿Cuántos kilos ha subido?</label>
-            <select>
+            <select id="kgSubidos">
               <option value="">-- Seleccionar --</option>
               <option>1–3 kg</option>
               <option>4–6 kg</option>
@@ -511,7 +520,7 @@
           </div>
           <div class="campo">
             <label>¿Cuántos kilos ha perdido?</label>
-            <select>
+            <select id="kgPerdidos">
               <option value="">-- Seleccionar --</option>
               <option>1–3 kg</option>
               <option>4–6 kg</option>
@@ -539,7 +548,7 @@
           </div>
           <div class="campo">
             <label>¿Con qué guisa sus alimentos?</label>
-            <select>
+            <select id="guisaAlimentos">
               <option value="">-- Seleccionar --</option>
               <option>Aceite vegetal</option>
               <option>Aceite animal</option>
@@ -551,22 +560,22 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>¿Presenta algún problema en la cavidad oral?</label>
-            <input type="text" placeholder="Especifique..."/>
+            <input type="text" id="problemaCavidad" placeholder="Especifique..."/>
           </div>
           <div class="campo">
             <label>¿Tiene problemas dentales que dificulten comer?</label>
-            <input type="text" placeholder="Especifique..."/>
+            <input type="text" id="problemaDental" placeholder="Especifique..."/>
           </div>
         </div>
 
         <div class="campo-grupo">
           <div class="campo">
             <label>¿Presenta algún problema para digerir los alimentos?</label>
-            <input type="text" placeholder="Especifique..."/>
+            <input type="text" id="problemaDigestion" placeholder="Especifique..."/>
           </div>
           <div class="campo">
             <label>¿Qué alimentos puede comer?</label>
-            <select>
+            <select id="alimentosPuedeComer">
               <option value="">-- Seleccionar --</option>
               <option>Derivados de la leche</option>
               <option>Carnes</option>
@@ -583,33 +592,33 @@
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>¿Qué come en el desayuno?</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Leche/café</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Pan/cereal</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Fruta/tamales</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Huevo/quesadillas</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Refresco/jugo</label>
-          </div>
+          <div class="casillas-grid" id="patron-desayuno">
+  <label class="casilla-item"><input type="checkbox" name="desayuno" value="Leche/café" onchange="toggleMarcada(this)"/> Leche/café</label>
+  <label class="casilla-item"><input type="checkbox" name="desayuno" value="Pan/cereal" onchange="toggleMarcada(this)"/> Pan/cereal</label>
+  <label class="casilla-item"><input type="checkbox" name="desayuno" value="Fruta/tamales" onchange="toggleMarcada(this)"/> Fruta/tamales</label>
+  <label class="casilla-item"><input type="checkbox" name="desayuno" value="Huevo/quesadillas" onchange="toggleMarcada(this)"/> Huevo/quesadillas</label>
+  <label class="casilla-item"><input type="checkbox" name="desayuno" value="Refresco/jugo" onchange="toggleMarcada(this)"/> Refresco/jugo</label>
+</div>
         </div>
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>¿Qué come en la comida?</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Refresco/agua</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Verduras/tacos</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Sopa maruchan/arroz</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Carne/soya</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Frijoles/gorditas</label>
-          </div>
+          <div class="casillas-grid" id="patron-comida">
+  <label class="casilla-item"><input type="checkbox" name="comida" value="Refresco/agua" onchange="toggleMarcada(this)"/> Refresco/agua</label>
+  <label class="casilla-item"><input type="checkbox" name="comida" value="Verduras/tacos" onchange="toggleMarcada(this)"/> Verduras/tacos</label>
+  <label class="casilla-item"><input type="checkbox" name="comida" value="Sopa maruchan/arroz" onchange="toggleMarcada(this)"/> Sopa maruchan/arroz</label>
+  <label class="casilla-item"><input type="checkbox" name="comida" value="Carne/soya" onchange="toggleMarcada(this)"/> Carne/soya</label>
+  <label class="casilla-item"><input type="checkbox" name="comida" value="Frijoles/gorditas" onchange="toggleMarcada(this)"/> Frijoles/gorditas</label>
+</div>
         </div>
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>¿Qué come en la cena?</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Leche/café</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Tacos/fruta</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Yogurt/tacos</label>
-          </div>
+          <div class="casillas-grid" id="patron-cena">
+  <label class="casilla-item"><input type="checkbox" name="cena" value="Leche/café" onchange="toggleMarcada(this)"/> Leche/café</label>
+  <label class="casilla-item"><input type="checkbox" name="cena" value="Tacos/fruta" onchange="toggleMarcada(this)"/> Tacos/fruta</label>
+  <label class="casilla-item"><input type="checkbox" name="cena" value="Yogurt/tacos" onchange="toggleMarcada(this)"/> Yogurt/tacos</label>
+</div>
         </div>
 
         <hr style="margin:16px 0; border-color:#EEE;"/>
@@ -618,7 +627,7 @@
         <div class="campo-grupo">
           <div class="campo">
             <label>Cepillado de dientes</label>
-            <select>
+            <select id="cepillado">
               <option value="">-- Seleccionar --</option>
               <option>Diario</option>
               <option>Cada 2 días</option>
@@ -630,7 +639,7 @@
           </div>
           <div class="campo">
             <label>Se baña</label>
-            <select>
+            <select id="bano">
               <option value="">-- Seleccionar --</option>
               <option>Diario</option>
               <option>Cada 2 días</option>
@@ -639,7 +648,7 @@
           </div>
           <div class="campo">
             <label>Cambio de ropa</label>
-            <select>
+            <select id="cambioRopa">
               <option value="">-- Seleccionar --</option>
               <option>Diario</option>
               <option>Cada 2 días</option>
@@ -650,13 +659,13 @@
 
         <div class="campo-casillas" style="margin-top:12px;">
           <label>Lavado de manos</label>
-          <div class="casillas-grid">
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Antes de comer</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Después de ir al baño</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Antes de preparar alimentos</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> Más de una vez</label>
-            <label class="casilla-item"><input type="checkbox" onchange="toggleMarcada(this)"/> A veces</label>
-          </div>
+          <div class="casillas-grid" id="patron-lavado">
+  <label class="casilla-item"><input type="checkbox" name="lavadoManos" value="Antes de comer" onchange="toggleMarcada(this)"/> Antes de comer</label>
+  <label class="casilla-item"><input type="checkbox" name="lavadoManos" value="Después de ir al baño" onchange="toggleMarcada(this)"/> Después de ir al baño</label>
+  <label class="casilla-item"><input type="checkbox" name="lavadoManos" value="Antes de preparar alimentos" onchange="toggleMarcada(this)"/> Antes de preparar alimentos</label>
+  <label class="casilla-item"><input type="checkbox" name="lavadoManos" value="Más de una vez" onchange="toggleMarcada(this)"/> Más de una vez</label>
+  <label class="casilla-item"><input type="checkbox" name="lavadoManos" value="A veces" onchange="toggleMarcada(this)"/> A veces</label>
+</div>
         </div>
 
         <div class="campo-grupo" style="margin-top:16px;">

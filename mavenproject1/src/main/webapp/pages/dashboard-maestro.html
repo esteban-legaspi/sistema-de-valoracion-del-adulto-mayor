@@ -212,9 +212,10 @@ function renderTabla(lista) {
       ? '<span class="badge badge-revision">Con retroalimentación</span>'
       : '<span style="color:#bbb; font-size:0.78rem;">Sin retroalimentación</span>';
 
+   var btnVer   = '<button class="btn-ver" onclick="verValoracion(' + v.id + ')" style="margin-right:0.4rem;">Ver</button>';
     var btnRetro = v.completada
-      ? '<button class="btn-ver" onclick="abrirModalRetro(' + v.id + ')">Retroalimentar</button>'
-      : '<span style="color:#bbb; font-size:0.78rem;">—</span>';
+      ? btnVer + '<button class="btn-ver" onclick="abrirModalRetro(' + v.id + ')">Retroalimentar</button>'
+      : btnVer;
 
     return '<tr>' +
       '<td>#V-' + String(v.id).padStart(4, '0') + '</td>' +
@@ -281,6 +282,12 @@ function formatearFecha(ts) {
 document.getElementById('modalRetro').addEventListener('click', function(e) {
   if (e.target === this) cerrarModalRetro();
 });
+
+function verValoracion(id) {
+  sessionStorage.setItem('valoracionId', id);
+  sessionStorage.setItem('modoLectura', 'true');
+  window.location.href = 'formularioValoracion.html';
+};
 </script>
 </body>
 </html>

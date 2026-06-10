@@ -1,6 +1,7 @@
 package com.mycompany.mavenproject1;
 
 import java.sql.*;
+import org.json.JSONObject;
 
 public class ValoracionDao {
 
@@ -36,7 +37,7 @@ public class ValoracionDao {
     }
 
     // ── Inserta o actualiza paciente_datos ───────────────
-    public void insertarPacienteDatos(PacienteDatos p) {
+    public void insertarPacienteDatos(PacienteDatos p, int valoracionId) {
         // Usa INSERT ... ON DUPLICATE KEY UPDATE para soportar guardado parcial
         String sql =
             "INSERT INTO paciente_datos " +
@@ -64,7 +65,7 @@ public class ValoracionDao {
             if (p.getEdad() != null) ps.setInt(3, p.getEdad());
             else                     ps.setNull(3, Types.TINYINT);
 
-            ps.setString(4, p.getGenero());
+            ps.setString(4,  nullIfBlank(p.getGenero()));
             ps.setString(5, p.getLugarNacimiento());
             ps.setString(6, p.getDomicilio());
 
@@ -74,12 +75,12 @@ public class ValoracionDao {
                 ps.setNull(7, Types.DATE);
 
             ps.setString(8,  p.getReligion());
-            ps.setString(9,  p.getEscolaridad());
-            ps.setString(10, p.getEstadoCivil());
+            ps.setString(9,  nullIfBlank(p.getEscolaridad()));
+            ps.setString(10, nullIfBlank(p.getEstadoCivil()));
             ps.setString(11, p.getOcupacion());
             ps.setString(12, p.getDependenciaInstitucion());
             ps.setString(13, p.getServiciosSalud());
-            ps.setString(14, p.getCuandoAcudeMedico());
+            ps.setString(14, nullIfBlank(p.getCuandoAcudeMedico()));
 
             if (p.getCapazDecisiones() != null) ps.setBoolean(15, p.getCapazDecisiones());
             else                                ps.setNull(15, Types.TINYINT);
@@ -137,8 +138,8 @@ public void insertarEntorno(entorno e) {
         ps.setString(10, e.getFaunaNociva());
         ps.setString(11, e.getAnimalesDomesticos());
 
-        ps.setString(12, e.getNumAnimales());
-        ps.setString(13, e.getAnimalesVacunados());
+        ps.setString(12, nullIfBlank(e.getNumAnimales()));
+        ps.setString(13, nullIfBlank(e.getAnimalesVacunados()));
 
         ps.executeUpdate();
 
@@ -147,45 +148,54 @@ public void insertarEntorno(entorno e) {
     }
 }
 public void insertarPatronVida(PatronVida p) {
-
     String sql =
         "INSERT INTO patron_vida (" +
-        "valoracion_id, relacion_familiar, ingreso_economico, dependencia_economica," +
-        "estado_nutricional, cabello, mucosas, piel, labios, encias," +
-        "nariz_orejas, unas, sistema_oseo, estado_general," +
-        "kg_subidos, kg_perdidos, dentadura, guisa_alimentos," +
-        "problema_cavidad_oral, problema_dental_comer, problema_digestion," +
-        "alimentos_puede_comer, desayuno, comida, cena," +
-        "cepillado_dientes, bano, cambio_ropa, lavado_manos," +
-        "enfermedad_presente, tiene_tratamiento" +
-        ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        "valoracion_id,relacion_familiar,ingreso_economico,dependencia_economica," +
+        "estado_nutricional,cabello,mucosas,piel,labios,encias," +
+        "nariz_orejas,unas,sistema_oseo,estado_general," +
+        "kg_subidos,kg_perdidos,dentadura,guisa_alimentos," +
+        "problema_cavidad_oral,problema_dental_comer,problema_digestion," +
+        "alimentos_puede_comer,desayuno,comida,cena," +
+        "cepillado_dientes,bano,cambio_ropa,lavado_manos," +
+        "enfermedad_presente,tiene_tratamiento" +
+        ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) " +
+        "ON DUPLICATE KEY UPDATE " +
+        "relacion_familiar=VALUES(relacion_familiar),ingreso_economico=VALUES(ingreso_economico)," +
+        "dependencia_economica=VALUES(dependencia_economica),estado_nutricional=VALUES(estado_nutricional)," +
+        "cabello=VALUES(cabello),mucosas=VALUES(mucosas),piel=VALUES(piel)," +
+        "labios=VALUES(labios),encias=VALUES(encias),nariz_orejas=VALUES(nariz_orejas)," +
+        "unas=VALUES(unas),sistema_oseo=VALUES(sistema_oseo),estado_general=VALUES(estado_general)," +
+        "kg_subidos=VALUES(kg_subidos),kg_perdidos=VALUES(kg_perdidos)," +
+        "dentadura=VALUES(dentadura),guisa_alimentos=VALUES(guisa_alimentos)," +
+        "problema_cavidad_oral=VALUES(problema_cavidad_oral),problema_dental_comer=VALUES(problema_dental_comer)," +
+        "problema_digestion=VALUES(problema_digestion),alimentos_puede_comer=VALUES(alimentos_puede_comer)," +
+        "desayuno=VALUES(desayuno),comida=VALUES(comida),cena=VALUES(cena)," +
+        "cepillado_dientes=VALUES(cepillado_dientes),bano=VALUES(bano),cambio_ropa=VALUES(cambio_ropa)," +
+        "lavado_manos=VALUES(lavado_manos),enfermedad_presente=VALUES(enfermedad_presente)," +
+        "tiene_tratamiento=VALUES(tiene_tratamiento)";
 
     try(Connection con = Dbconnection.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
 
         ps.setInt(1, p.getValoracionId());
 
-        ps.setString(2, p.getRelacionFamiliar());
-        ps.setString(3, p.getIngresoEconomico());
-        ps.setString(4, p.getDependenciaEconomica());
-        ps.setString(5, p.getEstadoNutricional());
-
-        ps.setString(6, p.getCabello());
-        ps.setString(7, p.getMucosas());
-        ps.setString(8, p.getPiel());
-        ps.setString(9, p.getLabios());
-        ps.setString(10, p.getEncias());
-
-        ps.setString(11, p.getNarizOrejas());
-        ps.setString(12, p.getUnas());
-        ps.setString(13, p.getSistemaOseo());
-        ps.setString(14, p.getEstadoGeneral());
-
-        ps.setString(15, p.getKgSubidos());
-        ps.setString(16, p.getKgPerdidos());
-
-        ps.setString(17, p.getDentadura());
-        ps.setString(18, p.getGuisaAlimentos());
+        ps.setString(2,  nullIfBlank(p.getRelacionFamiliar()));
+        ps.setString(3,  nullIfBlank(p.getIngresoEconomico()));
+        ps.setString(4,  nullIfBlank(p.getDependenciaEconomica()));
+        ps.setString(5,  nullIfBlank(p.getEstadoNutricional()));
+        ps.setString(6,  nullIfBlank(p.getCabello()));
+        ps.setString(7,  nullIfBlank(p.getMucosas()));
+        ps.setString(8,  nullIfBlank(p.getPiel()));
+        ps.setString(9,  nullIfBlank(p.getLabios()));
+        ps.setString(10, nullIfBlank(p.getEncias()));
+        ps.setString(11, nullIfBlank(p.getNarizOrejas()));
+        ps.setString(12, nullIfBlank(p.getUnas()));
+        ps.setString(13, nullIfBlank(p.getSistemaOseo()));
+        ps.setString(14, nullIfBlank(p.getEstadoGeneral()));
+        ps.setString(15, nullIfBlank(p.getKgSubidos()));
+        ps.setString(16, nullIfBlank(p.getKgPerdidos()));
+        ps.setString(17, nullIfBlank(p.getDentadura()));
+        ps.setString(18, nullIfBlank(p.getGuisaAlimentos()));
 
         ps.setString(19, p.getProblemaCavidadOral());
         ps.setString(20, p.getProblemaDentalComer());
@@ -197,10 +207,9 @@ public void insertarPatronVida(PatronVida p) {
         ps.setString(24, p.getComida());
         ps.setString(25, p.getCena());
 
-        ps.setString(26, p.getCepilladoDientes());
-        ps.setString(27, p.getBano());
-        ps.setString(28, p.getCambioRopa());
-
+        ps.setString(26, nullIfBlank(p.getCepilladoDientes()));
+        ps.setString(27, nullIfBlank(p.getBano()));
+        ps.setString(28, nullIfBlank(p.getCambioRopa()));
         ps.setString(29, p.getLavadoManos());
 
         ps.setString(30, p.getEnfermedadPresente());
@@ -224,4 +233,109 @@ public void insertarPatronVida(PatronVida p) {
         v.setCompletada(rs.getBoolean("completada"));
         return v;
     }
+    
+    public JSONObject obtenerDatosGuardados(int valoracionId) {
+    JSONObject out = new JSONObject();
+    try (Connection con = Dbconnection.getConnection()) {
+
+        // paciente_datos
+        try (PreparedStatement ps = con.prepareStatement(
+                "SELECT * FROM paciente_datos WHERE valoracion_id=?")) {
+            ps.setInt(1, valoracionId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                out.put("nombrePaciente",   rs.getString("nombre"));
+                out.put("edadPaciente",     rs.getObject("edad"));
+                out.put("generoPaciente",   rs.getString("genero"));
+                out.put("lugarNacimiento",  rs.getString("lugar_nacimiento"));
+                out.put("domicilio",        rs.getString("domicilio"));
+                out.put("fechaIngreso",     rs.getString("fecha_ingreso"));
+                out.put("religion",         rs.getString("religion"));
+                out.put("escolaridad",      rs.getString("escolaridad"));
+                out.put("estadoCivil",      rs.getString("estado_civil"));
+                out.put("ocupacion",        rs.getString("ocupacion"));
+                out.put("dependencia",      rs.getString("dependencia_institucion"));
+                out.put("serviciosSalud",   new org.json.JSONArray(rs.getString("servicios_salud") != null ? rs.getString("servicios_salud") : "[]"));
+                out.put("cuandoAcude",      rs.getString("cuando_acude_medico"));
+                out.put("capazDecisiones",  rs.getObject("capaz_decisiones"));
+                out.put("responsable",      rs.getString("responsable"));
+                out.put("llevaTratamiento", rs.getObject("lleva_tratamiento"));
+            }
+        }
+
+        // entorno
+        try (PreparedStatement ps = con.prepareStatement(
+                "SELECT * FROM entorno WHERE valoracion_id=?")) {
+            ps.setInt(1, valoracionId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String[] jsonCols = {"tipo_piso","tipo_pared","tipo_techo","tipo_luz",
+                    "abastecimiento_agua","purificacion_agua","drenaje","tratamiento_basura",
+                    "fauna_nociva","animales_domesticos"};
+                String[] jsKeys   = {"tipoPiso","tipoPared","tipoTecho","tipoLuz",
+                    "abastecimientoAgua","purificacionAgua","drenaje","tratamientoBasura",
+                    "faunaNociva","animalesDomesticos"};
+                for (int i = 0; i < jsonCols.length; i++) {
+                    String raw = rs.getString(jsonCols[i]);
+                    out.put(jsKeys[i], new org.json.JSONArray(raw != null ? raw : "[]"));
+                }
+                out.put("numAnimales",       rs.getString("num_animales"));
+                out.put("animalesVacunados", rs.getString("animales_vacunados"));
+            }
+        }
+
+        // patron_vida
+        try (PreparedStatement ps = con.prepareStatement(
+                "SELECT * FROM patron_vida WHERE valoracion_id=?")) {
+            ps.setInt(1, valoracionId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                out.put("relacionFamiliar",    rs.getString("relacion_familiar"));
+                out.put("ingresoEconomico",    rs.getString("ingreso_economico"));
+                out.put("dependenciaEconomica",rs.getString("dependencia_economica"));
+                out.put("estadoNutricional",   rs.getString("estado_nutricional"));
+                out.put("cabello",  rs.getString("cabello"));
+                out.put("mucosas",  rs.getString("mucosas"));
+                out.put("piel",     rs.getString("piel"));
+                out.put("labios",   rs.getString("labios"));
+                out.put("encias",   rs.getString("encias"));
+                out.put("narizOrejas",  rs.getString("nariz_orejas"));
+                out.put("unas",         rs.getString("unas"));
+                out.put("sistemaOseo",  rs.getString("sistema_oseo"));
+                out.put("estadoGeneral",rs.getString("estado_general"));
+                out.put("kgSubidos",    rs.getString("kg_subidos"));
+                out.put("kgPerdidos",   rs.getString("kg_perdidos"));
+                out.put("dentadura",    rs.getString("dentadura"));
+                out.put("guisaAlimentos",       rs.getString("guisa_alimentos"));
+                out.put("problemaCavidad",      rs.getString("problema_cavidad_oral"));
+                out.put("problemaDental",       rs.getString("problema_dental_comer"));
+                out.put("problemaDigestion",    rs.getString("problema_digestion"));
+                out.put("alimentosPuedeComer",  rs.getString("alimentos_puede_comer"));
+                String[] jsonCols2 = {"desayuno","comida","cena","lavado_manos"};
+                String[] jsKeys2   = {"desayuno","comida","cena","lavadoManos"};
+                for (int i = 0; i < jsonCols2.length; i++) {
+                    String raw = rs.getString(jsonCols2[i]);
+                    out.put(jsKeys2[i], new org.json.JSONArray(raw != null ? raw : "[]"));
+                }
+                out.put("cepillado",        rs.getString("cepillado_dientes"));
+                out.put("bano",             rs.getString("bano"));
+                out.put("cambioRopa",       rs.getString("cambio_ropa"));
+                out.put("enfermedadPresente",rs.getString("enfermedad_presente"));
+                out.put("tieneTratamiento", rs.getString("tiene_tratamiento"));
+            }
+        }
+        
+                // Detectar siguiente sección sin completar
+        int seccionActual = 0;
+        if (out.has("tipoPiso")) seccionActual = 2;
+        out.put("seccionActual", seccionActual);
+    } catch (Exception e) { e.printStackTrace(); return null; }
+    return out;
 }
+    
+    private String nullIfBlank(String s) {
+    return (s == null || s.trim().isEmpty()) ? null : s.trim();
+}
+}
+
+

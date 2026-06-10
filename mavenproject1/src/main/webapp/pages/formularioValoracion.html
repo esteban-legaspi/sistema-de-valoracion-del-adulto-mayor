@@ -12,15 +12,7 @@
   <script src="../scripts/formulario.js" defer></script>
   <script src="../scripts/filtros.js" defer></script>
   <script src="../scripts/helpers.js" defer></script>
-
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-          cambiarSeccion(0);
-            generarPreguntasMmse();
-            generarPreguntasGds();
-            generarPreguntasKatz();
-    });
-</script>
+<script defer src="../scripts/init.js"></script>
 </head>
 <body>
 
@@ -36,7 +28,7 @@
       <p>Referente teórico: Dorotea Elizabeth Orem</p>
     </div>
     <div class="header-right">
-      <button class="btn-cerrar" onclick="navegar('dashboard.html')">← Salir</button>
+      <button class="btn-cerrar" onclick="salir()">← Salir</button>
     </div>
   </div>
 

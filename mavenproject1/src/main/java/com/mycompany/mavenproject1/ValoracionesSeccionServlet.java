@@ -54,8 +54,8 @@ public class ValoracionesSeccionServlet extends HttpServlet {
             switch (seccion) {
 
                 case 1:
-                    guardarEntorno(json, valoracionId);
-                    guardarPatronVida(json, valoracionId);
+                    guardarEntorno(json);
+                    guardarPatronVida(json);
                     break;
 
                 case 2:
@@ -95,12 +95,11 @@ public class ValoracionesSeccionServlet extends HttpServlet {
     }
 
     
-    private void guardarEntorno(JSONObject json,
-                            int valoracionId) {
+    private void guardarEntorno(JSONObject json) {
 
     entorno e = new entorno();
 
-    e.setValoracionId(valoracionId);
+    e.setValoracionId(json.getInt("valoracionId"));
 
     e.setTipoPiso(
         json.getJSONArray("tipoPiso").toString()
@@ -153,12 +152,11 @@ public class ValoracionesSeccionServlet extends HttpServlet {
     dao.insertarEntorno(e);
 }
     
-    private void guardarPatronVida(JSONObject json,
-                               int valoracionId) {
+    private void guardarPatronVida(JSONObject json) {
 
     PatronVida p = new PatronVida();
 
-    p.setValoracionId(valoracionId);
+    p.setValoracionId(json.getInt("valoracionId"));
 
     p.setRelacionFamiliar(json.optString("relacionFamiliar"));
     p.setIngresoEconomico(json.optString("ingresoEconomico"));

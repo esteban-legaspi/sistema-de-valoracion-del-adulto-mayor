@@ -99,6 +99,10 @@ function recolectarSeccion6() { return { seccion: 6 }; }
 async function guardarSeccion(seccion) {
   try {
     if (seccion === 0) {
+        
+      if (!valoracionId) {
+        valoracionId = sessionStorage.getItem('valoracionId');
+      }
       // Sección 1: crea la valoración y obtiene el ID
       var datos = recolectarSeccion0();
       var body  = new URLSearchParams(datos);
@@ -109,6 +113,9 @@ async function guardarSeccion(seccion) {
       datos.serviciosSalud.forEach(function(s) {
         body.append('serviciosSalud', s);
       });
+      
+      if (valoracionId) body.append('valoracionId', valoracionId);
+
 
       var res  = await fetch('../api/valoraciones', { method: 'POST', body: body });
       var json = await res.json();
@@ -226,4 +233,110 @@ function mostrarToast(mensaje, esError) {
   toast.style.opacity    = '1';
   clearTimeout(toast._timer);
   toast._timer = setTimeout(function() { toast.style.opacity = '0'; }, 2500);
+}
+
+// =============================================
+// CARGA DE DATOS GUARDADOS AL RETOMAR
+// =============================================
+
+async function cargarDatosGuardados() {
+  var id = sessionStorage.getItem('valoracionId');
+  if (!id) return;
+  valoracionId = id;
+
+  try {
+    var res  = await fetch('../api/valoraciones?id=' + id);
+    var json = await res.json();
+    if (!json.ok) return;
+
+    // Sección 1 - paciente
+    setVal('nombrePaciente',  json.nombrePaciente);
+    setVal('edadPaciente',    json.edadPaciente);
+    setVal('generoPaciente',  json.generoPaciente);
+    setVal('lugarNacimiento', json.lugarNacimiento);
+    setVal('domicilio',       json.domicilio);
+    setVal('fechaIngreso',    json.fechaIngreso);
+    setVal('religion',        json.religion);
+    setVal('escolaridad',     json.escolaridad);
+    setVal('estadoCivil',     json.estadoCivil);
+    setVal('ocupacion',       json.ocupacion);
+    setVal('dependencia',     json.dependencia);
+    setVal('cuandoAcude',     json.cuandoAcude);
+    setVal('responsable',     json.responsable);
+    setChks('serviciosSalud', json.serviciosSalud);
+    if (json.capazDecisiones != null) setVal('capazDecisiones', json.capazDecisiones ? 'Sí' : 'No');
+    if (json.llevaTratamiento != null) setVal('llevaTratamiento', json.llevaTratamiento ? 'Sí' : 'No');
+
+    // Sección 2 - entorno
+    setChks('tipoPiso',           json.tipoPiso);
+    setChks('tipoPared',          json.tipoPared);
+    setChks('tipoTecho',          json.tipoTecho);
+    setChks('tipoLuz',            json.tipoLuz);
+    setChks('abastecimientoAgua', json.abastecimientoAgua);
+    setChks('purificacionAgua',   json.purificacionAgua);
+    setChks('drenaje',            json.drenaje);
+    setChks('tratamientoBasura',  json.tratamientoBasura);
+    setChks('faunaNociva',        json.faunaNociva);
+    setChks('animalesDomesticos', json.animalesDomesticos);
+    setVal('numAnimales',         json.numAnimales);
+    setVal('animalesVacunados',   json.animalesVacunados);
+
+    // Sección 2 - patrón de vida
+    setVal('relacionFamiliar',     json.relacionFamiliar);
+    setVal('ingresoEconomico',     json.ingresoEconomico);
+    setVal('dependenciaEconomica', json.dependenciaEconomica);
+    setRadio('nutricional',        json.estadoNutricional);
+    setVal('cabello',      json.cabello);
+    setVal('mucosas',      json.mucosas);
+    setVal('piel',         json.piel);
+    setVal('labios',       json.labios);
+    setVal('encias',       json.encias);
+    setVal('narizOrejas',  json.narizOrejas);
+    setVal('unas',         json.unas);
+    setVal('sistemaOseo',  json.sistemaOseo);
+    setVal('estadoGeneral',json.estadoGeneral);
+    setVal('kgSubidos',    json.kgSubidos);
+    setVal('kgPerdidos',   json.kgPerdidos);
+    setVal('dentadura',    json.dentadura);
+    setVal('guisaAlimentos',      json.guisaAlimentos);
+    setVal('problemaCavidad',     json.problemaCavidad);
+    setVal('problemaDental',      json.problemaDental);
+    setVal('problemaDigestion',   json.problemaDigestion);
+    setVal('alimentosPuedeComer', json.alimentosPuedeComer);
+    setChks('desayuno',    json.desayuno);
+    setChks('comida',      json.comida);
+    setChks('cena',        json.cena);
+    setVal('cepillado',    json.cepillado);
+    setVal('bano',         json.bano);
+    setVal('cambioRopa',   json.cambioRopa);
+    setChks('lavadoManos', json.lavadoManos);
+    setVal('enfermedadPresente', json.enfermedadPresente);
+    setVal('tieneTratamiento',   json.tieneTratamiento);
+// Al final del bloque try, antes del catch:
+// Determinar última sección con datos
+return json.seccionActual || 0;
+  } catch (e) {
+      
+    console.error('Error cargando:', e); return 0;
+  }
+}
+
+function setVal(id, v) {
+  var el = document.getElementById(id);
+  if (el && v != null && v !== 'null') el.value = v;
+}
+
+function setChks(name, arr) {
+  if (!arr) return;
+  var vals = Array.isArray(arr) ? arr : [];
+  document.querySelectorAll('input[name="' + name + '"]').forEach(function(el) {
+    el.checked = vals.indexOf(el.value) > -1;
+    if (el.checked) el.closest('.casilla-item').classList.add('marcada');
+  });
+}
+
+function setRadio(name, v) {
+  if (!v) return;
+  var el = document.querySelector('input[name="' + name + '"][value="' + CSS.escape(v) + '"]');
+  if (el) { el.checked = true; el.closest('.casilla-item').classList.add('marcada'); }
 }

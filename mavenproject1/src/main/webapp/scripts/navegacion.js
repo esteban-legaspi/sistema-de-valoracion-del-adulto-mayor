@@ -18,13 +18,14 @@ function navegar(pagina) {
 // =============================================
 var seccionActual = 0;
 var totalSecciones = 7;
-var guardandoSeccion = false; // Evita doble clic
+var guardandoSeccion = false; 
+var cargandoInicial = false; // Evita doble clic
 
 async function cambiarSeccion(n) {
   // Si está avanzando (no retrocediendo), guarda primero
   var avanzando = n > seccionActual;
 
-  if (avanzando && !guardandoSeccion) {
+  if (avanzando && !guardandoSeccion && !cargandoInicial && sessionStorage.getItem('modoLectura') !== 'true') {
     guardandoSeccion = true;
 
     // Deshabilitar botón Siguiente visualmente

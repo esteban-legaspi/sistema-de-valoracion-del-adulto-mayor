@@ -37,11 +37,30 @@ public class ValoracionesServlet extends HttpServlet {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
         try {
-            // 2. Crear registro raíz en valoraciones
-            Valoracion v = new Valoracion();
-            v.setUsuarioId(usuario.getId());
-            v.setCompletada(false);
-            int valoracionId = dao.insertar(v);
+            // Después de verificar sesión, antes de crear Valoracion:
+            String vidParam = req.getParameter("valoracionId");
+            int valoracionId = 0;
+
+            if (vidParam != null && !vidParam.isBlank()) {
+                // Ya existe — solo actualizar paciente_datos
+                try { valoracionId = Integer.parseInt(vidParam.trim()); }
+                catch (NumberFormatException ignored) {}
+            }
+
+            if (valoracionId == 0) {
+                // Crear nueva valoración
+                Valoracion v = new Valoracion();
+                v.setUsuarioId(usuario.getId());
+                v.setCompletada(false);
+                valoracionId = dao.insertar(v);
+                            if (valoracionId == 0) {
+                            res.setStatus(500);
+                            json.put("ok", false);
+                            json.put("mensaje", "Error al crear la valoración.");
+                            imprimir(res, json.toString());
+                            return;
+                        }
+            }
 
             if (valoracionId == 0) {
                 res.setStatus(500);
@@ -87,86 +106,9 @@ public class ValoracionesServlet extends HttpServlet {
                 for (String s : servicios) arr.put(s);
             }
             p.setServiciosSalud(arr.toString());
-            
-            // 4. Armar Entorno desde los parámetros del formulario
-
-entorno e = new entorno();
-e.setValoracionId(valoracionId);
-
-// Campos JSON
-e.setTipoPiso(
-    new JSONArray(req.getParameterValues("tipoPiso") != null ?
-        req.getParameterValues("tipoPiso") : new String[0]
-    ).toString()
-);
-
-e.setTipoPared(
-    new JSONArray(req.getParameterValues("tipoPared") != null ?
-        req.getParameterValues("tipoPared") : new String[0]
-    ).toString()
-);
-
-e.setTipoTecho(
-    new JSONArray(req.getParameterValues("tipoTecho") != null ?
-        req.getParameterValues("tipoTecho") : new String[0]
-    ).toString()
-);
-
-e.setTipoLuz(
-    new JSONArray(req.getParameterValues("tipoLuz") != null ?
-        req.getParameterValues("tipoLuz") : new String[0]
-    ).toString()
-);
-
-e.setAbastecimientoAgua(
-    new JSONArray(req.getParameterValues("abastecimientoAgua") != null ?
-        req.getParameterValues("abastecimientoAgua") : new String[0]
-    ).toString()
-);
-
-e.setPurificacionAgua(
-    new JSONArray(req.getParameterValues("purificacionAgua") != null ?
-        req.getParameterValues("purificacionAgua") : new String[0]
-    ).toString()
-);
-
-e.setDrenaje(
-    new JSONArray(req.getParameterValues("drenaje") != null ?
-        req.getParameterValues("drenaje") : new String[0]
-    ).toString()
-);
-
-e.setTratamientoBasura(
-    new JSONArray(req.getParameterValues("tratamientoBasura") != null ?
-        req.getParameterValues("tratamientoBasura") : new String[0]
-    ).toString()
-);
-
-e.setFaunaNociva(
-    new JSONArray(req.getParameterValues("faunaNociva") != null ?
-        req.getParameterValues("faunaNociva") : new String[0]
-    ).toString()
-);
-
-e.setAnimalesDomesticos(
-    new JSONArray(req.getParameterValues("animalesDomesticos") != null ?
-        req.getParameterValues("animalesDomesticos") : new String[0]
-    ).toString()
-);
-
-// ENUMS
-
-e.setNumAnimales(req.getParameter("numAnimales"));
-e.setAnimalesVacunados(req.getParameter("animalesVacunados"));
-
-// 5. Guardar entorno
-
-dao.insertarEntorno(e);
-
-            // 4. Guardar paciente_datos
-            dao.insertarPacienteDatos(p);
 
             // 5. Responder con el ID para que el JS lo use al guardar secciones siguientes
+            dao.insertarPacienteDatos(p, valoracionId);
             json.put("ok", true);
             json.put("valoracionId", valoracionId);
 
@@ -243,4 +185,27 @@ dao.insertarEntorno(e);
         }
         return map;
     }
+    
+    @Override
+protected void doGet(HttpServletRequest req, HttpServletResponse res)
+        throws ServletException, IOException {
+    res.setContentType("application/json;charset=UTF-8");
+
+    HttpSession session = req.getSession(false);
+    if (session == null || session.getAttribute("usuario") == null) {
+        res.setStatus(401); imprimir(res, "{\"ok\":false}"); return;
+    }
+
+    JSONObject json = new JSONObject();
+    try {
+        int id = Integer.parseInt(req.getParameter("id"));
+        JSONObject datos = dao.obtenerDatosGuardados(id);
+        if (datos == null) { json.put("ok", false); }
+        else { datos.put("ok", true); json = datos; }
+    } catch (Exception e) {
+        e.printStackTrace(); res.setStatus(500); json.put("ok", false);
+    }
+    imprimir(res, json.toString());
 }
+}
+
